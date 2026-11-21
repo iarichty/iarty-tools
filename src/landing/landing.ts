@@ -595,8 +595,8 @@ export function initLanding(): Cleanup {
         qcy(e.clientY - 17)
       })
       qa('a,.blk,.pill,.card').forEach((a) => {
-        a.addEventListener('mouseenter', () => gsap.to(cur, { scale: 1.7, duration: 0.3 }))
-        a.addEventListener('mouseleave', () => gsap.to(cur, { scale: 1, duration: 0.3 }))
+        onEl(a, 'mouseenter', () => gsap.to(cur, { scale: 1.7, duration: 0.3 }))
+        onEl(a, 'mouseleave', () => gsap.to(cur, { scale: 1, duration: 0.3 }))
       })
     }
   })
