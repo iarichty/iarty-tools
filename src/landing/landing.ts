@@ -325,16 +325,26 @@ export function initLanding(): Cleanup {
     const dz = q('#dz')
     const res = q('#res')
     const lst = q('#lst')
-    const people: Array<[string, string]> = [
-      ['nadia.putri', 'Nadia Putri'], ['reza_kusuma', 'Reza Kusuma'], ['dimas.arya', 'Dimas Arya'],
-      ['salsa.bella', 'Salsa Bella'], ['kopi.senja', 'Kopi Senja'], ['andra.visual', 'Andra Visual'],
-      ['mira.studio', 'Mira Studio'], ['bagas.ds', 'Bagas DS'], ['tika.rahma', 'Tika Rahma'],
-      ['fajar.nugroho', 'Fajar Nugroho'], ['lina.writes', 'Lina Writes'], ['yoga.trip', 'Yoga Trip'],
+    const people: Array<[string, string, string]> = [
+      ['nadia.putri', 'Nadia Putri', '1494790108377-be9c29b29330'],
+      ['reza_kusuma', 'Reza Kusuma', '1507003211169-0a1dd7228f2d'],
+      ['dimas.arya', 'Dimas Arya', '1500648767791-00dcc994a43e'],
+      ['salsa.bella', 'Salsa Bella', '1534528741775-53994a69daeb'],
+      ['kopi.senja', 'Kopi Senja', '1517841905240-472988babdf9'],
+      ['andra.visual', 'Andra Visual', '1539571696357-5a69c17a67c6'],
+      ['mira.studio', 'Mira Studio', '1524504388940-b1c1722653e1'],
+      ['bagas.ds', 'Bagas DS', '1522075469751-3a6694fb2f61'],
+      ['tika.rahma', 'Tika Rahma', '1544005313-94ddf0286df2'],
+      ['fajar.nugroho', 'Fajar Nugroho', '1506794778202-cad84cf45f1d'],
+      ['lina.writes', 'Lina Writes', '1534528741775-53994a69daeb'],
+      ['yoga.trip', 'Yoga Trip', '1492562080023-ab3db95bfbce'],
     ]
     lst.innerHTML = people
-      .map(([handle, name], i) => {
+      .map(([handle, name, avatarId], i) => {
         const h = (i * 47 + 200) % 360
-        return `<div class="rw"><span class="av" style="background:linear-gradient(135deg,hsl(${h} 70% 45%),hsl(${h + 50} 75% 38%))">${name.charAt(0)}</span><span class="nm"><b>${name}</b><small>@${handle}</small></span><span class="op">Buka</span></div>`
+        const fallbackBg = `linear-gradient(135deg,hsl(${h} 70% 45%),hsl(${h + 50} 75% 38%))`
+        const avatarUrl = `https://images.unsplash.com/photo-${avatarId}?w=100&h=100&fit=crop&crop=faces`
+        return `<div class="rw"><span class="av" style="background:${fallbackBg}"><img src="${avatarUrl}" alt="${name}" loading="lazy" onerror="this.remove()" /></span><span class="nm"><b>${name}</b><small>@${handle}</small></span><span class="op">Buka</span></div>`
       })
       .join('')
 

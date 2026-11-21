@@ -57,7 +57,7 @@ export default function Footer() {
                                 </motion.span>
                                 <span>by</span>
                                 <div className="flex gap-2">
-                                    <a href="https://fiqtor.com" target="_blank" rel="noopener noreferrer" className="text-purple-600 dark:text-purple-400 hover:underline decoration-2 underline-offset-4">fiqtor.com</a>
+                                    <a href="https://fiqtor.pages.dev" target="_blank" rel="noopener noreferrer" className="text-purple-600 dark:text-purple-400 hover:underline decoration-2 underline-offset-4">fiqtor.pages.dev</a>
                                     <span className="opacity-30">|</span>
                                     <a href="https://iarty.id" target="_blank" rel="noopener noreferrer" className="text-purple-600 dark:text-purple-400 hover:underline decoration-2 underline-offset-4">iarty.id</a>
                                 </div>
@@ -80,7 +80,7 @@ export default function Footer() {
                         </p>
 
                         <p>
-                            <a href="https://github.com/iarichty/iarty-tools" target="_blank" rel="noopener noreferrer" className="text-purple-600 dark:text-purple-400 hover:underline decoration-2 underline-offset-4">Open Source</a> Project by <a href="https://fiqtor.com" target="_blank" rel="noopener noreferrer" className="text-purple-600 dark:text-purple-400 hover:underline decoration-2 underline-offset-4">fiqtor.com</a>
+                            <a href="https://github.com/iarichty/iarty-tools" target="_blank" rel="noopener noreferrer" className="text-purple-600 dark:text-purple-400 hover:underline decoration-2 underline-offset-4">Open Source</a> Project by <a href="https://fiqtor.pages.dev" target="_blank" rel="noopener noreferrer" className="text-purple-600 dark:text-purple-400 hover:underline decoration-2 underline-offset-4">fiqtor.pages.dev</a>
                         </p>
                     </div>
                 </div>

@@ -75,10 +75,10 @@ footer a:hover{color:var(--bt)}
 :root{color-scheme:light}:root[data-theme="dark"]{color-scheme:dark}
 .ico svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .ico img{width:24px;height:24px;object-fit:contain}
-.ico-ig svg{stroke:none;fill:currentColor}
-.ico-tt svg{stroke:none}
-.ico-threads svg{stroke:none;fill:currentColor}
-.ico-x svg{stroke:none;fill:currentColor}
+.ico-combo{position:relative;width:44px;height:44px;overflow:hidden}
+.ico-combo img.th-ico{position:absolute;left:5px;top:6px;width:19px;height:19px;object-fit:contain}
+.ico-combo img.x-ico{position:absolute;right:5px;bottom:6px;width:16px;height:16px;object-fit:contain}
+.card:hover .ico-combo{transform:rotate(-8deg) scale(1.05);border-color:var(--blue)}
 .card:hover .ico{color:var(--blue)}
 .badge i svg{width:12px;height:12px;stroke:#fff;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 .tgl{width:40px;height:40px;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:50%;display:grid;place-items:center;cursor:pointer;padding:0;transition:border-color .2s,transform .3s}
@@ -129,7 +129,8 @@ footer a:hover{color:var(--bt)}
 .st .hl2{background:#0762de;border-color:#0762de}.st .hl2 b,.st .hl2 span{color:#fff}
 .tb{display:flex;gap:6px;margin:14px 0 6px;font-size:13px}.tb span{padding:6px 12px;border-radius:99px;border:1px solid var(--line);color:var(--mut)}.tb .a{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 .rw{display:flex;align-items:center;gap:12px;height:64px;border-bottom:1px solid var(--line)}
-.av{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:18px;flex:none}
+.av{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:18px;flex:none;overflow:hidden;border:1.5px solid rgba(255,255,255,.2);box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.av img{width:100%;height:100%;object-fit:cover;display:block}
 .nm{display:grid;line-height:1.25;min-width:0}.nm b{font-size:16px}.nm small{color:var(--mut);font-size:13px}
 .op{margin-left:auto;font-size:13px;font-weight:600;padding:7px 14px;border-radius:99px;background:var(--soft);border:1px solid var(--line)}
 .zipf{position:absolute;left:0;top:0;z-index:8;display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--card);color:var(--fg);border:1px solid var(--line);border-radius:12px;box-shadow:0 14px 34px rgba(6,26,51,.25);opacity:0;pointer-events:none;white-space:nowrap}
