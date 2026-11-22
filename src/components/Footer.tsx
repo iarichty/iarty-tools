@@ -1,95 +1,59 @@
-import { motion, type Variants } from 'framer-motion';
 import { FiHeart, FiGithub, FiExternalLink, FiShield, FiInfo } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 export default function Footer() {
     const currentYear = new Date().getFullYear();
 
-    const containerVariants = {
-        hidden: { opacity: 0, y: 30 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.8, ease: "easeOut" }
-        }
-    } as Variants;
-
     return (
-        <footer className="relative">
-            {/* Dekorasi Background agar nyambung dengan blur navbar */}
-            <div className="absolute inset-0 -z-10 flex justify-center items-end overflow-hidden pointer-events-none">
-                <div className="w-full h-50 bg-purple-500/10 dark:bg-purple-900/20 blur-[100px]" />
-            </div>
-
-            <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                className="mx-auto"
-            >
-                {/* Main Footer Card */}
-                <div className="bg-white/70 dark:bg-gray-950/70 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-[0_-8px_32px_rgba(0,0,0,0.05)] dark:shadow-[0_-8px_32px_rgba(0,0,0,0.2)] p-8 md:p-12">
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-                        {/* Left Side: Brand & Credit */}
-                        <div className="space-y-6 text-center md:text-left">
-                            <Link to="/" className="inline-flex items-center space-x-3 group">
-                                <div className="w-10 h-10 rounded-xl overflow-hidden border border-black/5 dark:border-white/10 shadow-sm transition-transform group-hover:rotate-12">
-                                    <img src="/img/icon.webp" alt="icon" className="object-cover w-full h-full" />
-                                </div>
-                                <span className="text-2xl font-black tracking-tighter text-gray-900 dark:text-white">
-                                    IARTY TOOLS
-                                </span>
-                            </Link>
-
-                            <p className="text-gray-500 dark:text-gray-400 font-medium max-w-sm mx-auto md:mx-0">
-                                Analyze your social media connections safely, quickly, and transparently — without ever storing your personal data.
-                            </p>
-
-                            <div className="flex items-center justify-center md:justify-start gap-2 text-sm font-bold text-gray-600 dark:text-gray-300">
-                                <span>Built with</span>
-                                <motion.span
-                                    animate={{ scale: [1, 1.2, 1] }}
-                                    transition={{ repeat: Infinity, duration: 1.5 }}
-                                >
-                                    <FiHeart className="w-4 h-4 text-red-500 fill-red-500" />
-                                </motion.span>
-                                <span>by</span>
-                                <div className="flex gap-2">
-                                    <a href="https://fiqtor.pages.dev" target="_blank" rel="noopener noreferrer" className="text-purple-600 dark:text-purple-400 hover:underline decoration-2 underline-offset-4">fiqtor.pages.dev</a>
-                                    <span className="opacity-30">|</span>
-                                    <a href="https://iarty.id" target="_blank" rel="noopener noreferrer" className="text-purple-600 dark:text-purple-400 hover:underline decoration-2 underline-offset-4">iarty.id</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Right Side: Quick Links */}
-                        <div className="grid grid-cols-2 gap-4">
-                            <FooterLink to="/instagram/how-analyze-works" icon={<FiInfo />} label="Panduan Instagram" />
-                            <FooterLink to="/tiktok/how-analyze-works" icon={<FiShield />} label="Panduan TikTok" />
-                            <FooterLink href="https://github.com/FIQTOR" icon={<FiGithub />} label="GitHub" isExternal />
-                            <FooterLink href="https://iarty.id" icon={<FiExternalLink />} label="iarty.id" isExternal />
+        <footer className="border-t border-[var(--line)] bg-[var(--soft)] text-[var(--fg)] transition-colors">
+            <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+                <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-center">
+                    {/* Brand */}
+                    <div className="space-y-4">
+                        <Link to="/" className="inline-flex items-center gap-2.5 font-bold text-lg text-[var(--fg)]">
+                            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[var(--blue)] text-white shadow-xs">
+                                <svg viewBox="0 0 1024 1024" className="h-5 w-5 fill-current" aria-hidden="true">
+                                    <path d="M 523.13 -0.56 L 635.4 111.72 L 228.69 518.43 L 616.78 906.53 L 499.81 1023.5 L -0.56 523.13 Z M 717.03 193.34 L 1023.51 499.82 L 703.11 820.21 L 590.74 707.84 L 794.16 504.41 L 600.06 310.31 Z M 428.66 432 L 594.11 432 L 594.11 590.73 L 428.66 590.73 Z"/>
+                                </svg>
+                            </span>
+                            <span className="tracking-tight leading-none">IARTY Tools</span>
+                        </Link>
+                        <p className="max-w-md text-sm text-[var(--mut)] leading-relaxed">
+                            Analisis koneksi media sosial Anda dengan aman, cepat, dan transparan. 100% diproses di browser tanpa pernah menyimpan data pribadi.
+                        </p>
+                        <div className="flex items-center gap-2 text-xs text-[var(--mut)]">
+                            <span>Built with</span>
+                            <FiHeart className="h-3.5 w-3.5 text-red-500 fill-red-500" />
+                            <span>by</span>
+                            <a href="https://fiqtor.pages.dev" target="_blank" rel="noopener noreferrer" className="font-semibold text-[var(--blue)] hover:underline">fiqtor.pages.dev</a>
+                            <span>·</span>
+                            <a href="https://iarty.id" target="_blank" rel="noopener noreferrer" className="font-semibold text-[var(--blue)] hover:underline">iarty.id</a>
                         </div>
                     </div>
 
-                    {/* Bottom Section */}
-                    <div className="mt-12 pt-8 border-t border-gray-200/50 dark:border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-                        <p className="text-xs font-bold tracking-widest text-gray-400 uppercase">
-                            © {currentYear} PT IARTY TEKNOLOGI DIGITAL. NO RIGHTS RESERVED.
-                        </p>
-
-                        <p>
-                            <a href="https://github.com/iarichty/iarty-tools" target="_blank" rel="noopener noreferrer" className="text-purple-600 dark:text-purple-400 hover:underline decoration-2 underline-offset-4">Open Source</a> Project by <a href="https://fiqtor.pages.dev" target="_blank" rel="noopener noreferrer" className="text-purple-600 dark:text-purple-400 hover:underline decoration-2 underline-offset-4">fiqtor.pages.dev</a>
-                        </p>
+                    {/* Links */}
+                    <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                        <FooterLink to="/instagram/how-analyze-works" icon={<FiInfo />} label="Panduan Instagram" />
+                        <FooterLink to="/tiktok/how-analyze-works" icon={<FiShield />} label="Panduan TikTok" />
+                        <FooterLink to="/threads/how-analyze-works" icon={<FiInfo />} label="Panduan Threads" />
+                        <FooterLink to="/x/how-analyze-works" icon={<FiShield />} label="Panduan X" />
+                        <FooterLink href="https://github.com/iarichty/iarty-tools" icon={<FiGithub />} label="GitHub Repo" isExternal />
+                        <FooterLink href="https://fiqtor.pages.dev" icon={<FiExternalLink />} label="Developer" isExternal />
                     </div>
                 </div>
-            </motion.div>
+
+                <div className="mt-10 pt-6 border-t border-[var(--line)] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[var(--mut)]">
+                    <p>© {currentYear} PT IARTY TEKNOLOGI DIGITAL. All rights reserved.</p>
+                    <p>
+                        <a href="https://github.com/iarichty/iarty-tools" target="_blank" rel="noopener noreferrer" className="font-medium text-[var(--blue)] hover:underline">Open Source</a>
+                        {' '}di GitHub
+                    </p>
+                </div>
+            </div>
         </footer>
     );
 }
 
-// Sub-component untuk link agar kode lebih bersih
 interface FooterLinkProps {
     to?: string;
     href?: string;
@@ -99,29 +63,25 @@ interface FooterLinkProps {
 }
 
 function FooterLink({ to, href, icon, label, isExternal = false }: FooterLinkProps) {
-    const className = "flex items-center gap-3 p-4 rounded-2xl bg-gray-50 dark:bg-white/5 border border-transparent hover:border-purple-500/30 hover:bg-white dark:hover:bg-white/10 transition-all group";
+    const className = "flex items-center gap-2.5 p-3 rounded-lg border border-[var(--line)] bg-[var(--card)] text-[var(--fg)] hover:border-[var(--blue)] transition-colors group text-sm";
     const inner = (
         <>
-            <span className="text-gray-400 group-hover:text-purple-500 transition-colors">{icon}</span>
-            <span className="text-sm font-bold text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white">{label}</span>
+            <span className="text-[var(--mut)] group-hover:text-[var(--blue)] transition-colors">{icon}</span>
+            <span className="font-medium text-xs sm:text-sm truncate">{label}</span>
         </>
     );
 
     if (isExternal && href) {
         return (
-            <motion.div whileHover={{ y: -4 }}>
-                <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
-                    {inner}
-                </a>
-            </motion.div>
+            <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
+                {inner}
+            </a>
         );
     }
 
     return (
-        <motion.div whileHover={{ y: -4 }}>
-            <Link to={to || '/'} className={className}>
-                {inner}
-            </Link>
-        </motion.div>
+        <Link to={to || '/'} className={className}>
+            {inner}
+        </Link>
     );
 }

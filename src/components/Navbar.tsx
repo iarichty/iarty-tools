@@ -130,13 +130,13 @@ export default function Navbar() {
         .find((href) => (href === '/' ? location.pathname === '/' : location.pathname.startsWith(href))) ?? '/';
 
     return (
-        <div className="fixed top-0 left-0 right-0 z-50 flex justify-center p-4 sm:p-6 lg:p-8">
+        <div className="fixed top-0 left-0 right-0 z-50 flex justify-center p-2.5 sm:p-4 lg:p-6">
             <motion.nav
                 initial={{ y: -100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                className="w-full max-w-5xl bg-white/70 dark:bg-gray-950/70 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.1)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)] rounded-4xl px-6 py-2"
+                className="w-full max-w-5xl bg-white/70 dark:bg-gray-950/70 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.1)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)] rounded-3xl sm:rounded-4xl px-3.5 sm:px-6 py-1.5 sm:py-2"
             >
-                <div className="flex items-center justify-between h-14">
+                <div className="flex items-center justify-between h-12 sm:h-14">
                     {/* Logo */}
                     <Link to="/" className="flex items-center space-x-3 group">
                         <div className="relative w-9 h-9 overflow-hidden rounded-xl border border-black/5 dark:border-white/10 shadow-sm transition-transform group-hover:scale-110">

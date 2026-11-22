@@ -32,6 +32,6 @@ describe('translate', () => {
 
 describe('detectLocale', () => {
     it('returns a supported locale', () => {
-        expect(['en', 'id']).toContain(detectLocale());
+        expect(['en', 'id', 'zh']).toContain(detectLocale());
     });
 });

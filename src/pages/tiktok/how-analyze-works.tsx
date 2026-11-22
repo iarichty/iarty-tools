@@ -4,11 +4,12 @@ import {
     FiUpload, FiArrowLeft, FiInfo,
     FiExternalLink, FiFileText
 } from 'react-icons/fi';
-import { useState, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import HelmetContainer from '@/components/HelmetContainer';
+import { useI18n } from '@/context/useI18n';
 
-type Language = 'en' | 'id';
+type Language = 'en' | 'id' | 'zh';
 
 type Step = {
     icon: ReactNode;
@@ -28,7 +29,8 @@ type TranslationType = {
 };
 
 export default function HowTikTokWorks() {
-    const [language, setLanguage] = useState<Language>('en');
+    const { locale, setLocale } = useI18n();
+    const language = (locale === 'id' || locale === 'en' || locale === 'zh') ? locale : 'en';
 
     const translations: Record<Language, TranslationType> = {
         en: {
@@ -122,6 +124,52 @@ export default function HowTikTokWorks() {
                     color: 'from-orange-500 to-yellow-500'
                 }
             ]
+        },
+        zh: {
+            back: '返回仪表板',
+            title: '如何获取您的 TikTok 数据',
+            subtitle: '按照以下步骤安全请求并下载您的 TikTok 数据。',
+            note: '注意：TikTok 通常需要 1-3 天准备数据文件，准备就绪后会收到通知。',
+            cta_ready: '我已有 ZIP 文件',
+            cta_open: '打开 TIKTOK',
+            steps: [
+                {
+                    icon: <FiSettings />,
+                    title: '设置与隐私',
+                    description: '打开 TikTok，进入个人主页，点击右上角三条横线菜单，选择“设置与隐私”。',
+                    color: 'from-gray-600 to-gray-800'
+                },
+                {
+                    icon: <FiUser />,
+                    title: '账户中心',
+                    description: '选择“账户”菜单访问您的个人资料及隐私数据设置。',
+                    color: 'from-[#fe2c55] to-pink-600'
+                },
+                {
+                    icon: <FiDownload />,
+                    title: '下载您的数据',
+                    description: '找到并选择“下载您的数据”。在此您可以申请个人数据副本。',
+                    color: 'from-blue-500 to-[#25f4ee]'
+                },
+                {
+                    icon: <FiFileText />,
+                    title: '选择 JSON 格式',
+                    description: '重要提示：必须选择“JSON”格式（不要选 TXT）。只有 JSON 格式才能被我们的系统解析。',
+                    color: 'from-[#25f4ee] to-teal-500'
+                },
+                {
+                    icon: <FiClock />,
+                    title: '提交申请并等待',
+                    description: '点击“请求数据”。TikTok 会准备文件，请在“下载数据”标签页定期查看（通常 24 小时以上）。',
+                    color: 'from-purple-600 to-[#fe2c55]'
+                },
+                {
+                    icon: <FiUpload />,
+                    title: '上传至 IARTY',
+                    description: 'ZIP 文件就绪后，下载到手机或电脑，然后上传到分析页面查看完整报告。',
+                    color: 'from-orange-500 to-yellow-500'
+                }
+            ]
         }
     };
 
@@ -139,49 +187,46 @@ export default function HowTikTokWorks() {
     };
 
     return (
-        <div className="min-h-screen bg-[#fafafa] dark:bg-[#0f0f13] text-gray-900 dark:text-white transition-colors duration-300 overflow-x-hidden">
+        <div className="min-h-screen bg-[var(--bg)] text-[var(--fg)] transition-colors duration-300">
             <HelmetContainer
                 title="How to get your TikTok data | IARTY Tools"
                 path="/tiktok/how-analyze-works"
             />
             {/* Background */}
-            <div className="fixed inset-0 pointer-events-none overflow-hidden">
-                <div className="absolute top-[-10%] left-[-10%] w-160 h-160 bg-[#fe2c55] rounded-full blur-[150px] opacity-[0.04] dark:opacity-[0.07]" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-160 h-160 bg-[#25f4ee] rounded-full blur-[150px] opacity-[0.04] dark:opacity-[0.07]" />
+            <div className="fixed inset-0 pointer-events-none overflow-hidden opacity-25 dark:opacity-10">
+                <div className="absolute top-[-10%] left-[-10%] w-160 h-160 bg-[#fe2c55] rounded-full blur-[150px]" />
+                <div className="absolute bottom-[-10%] right-[-10%] w-160 h-160 bg-[#25f4ee] rounded-full blur-[150px]" />
             </div>
 
-            <main className="relative z-10 max-w-6xl mx-auto px-6 py-24 md:py-32">
+            <main className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-12 md:py-16">
 
                 {/* Header Section */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between mb-20 gap-8">
+                <div className="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6">
                     <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
                         <button
                             onClick={() => window.history.back()}
-                            className="group flex items-center gap-2 text-xs font-black tracking-[0.2em] text-gray-500 hover:text-[#fe2c55] transition-colors mb-6 uppercase"
+                            className="group flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[var(--mut)] hover:text-[#fe2c55] transition-colors mb-4 cursor-pointer"
                         >
                             <FiArrowLeft className="group-hover:-translate-x-1 transition-transform w-4 h-4" />
                             {translations[language].back}
                         </button>
-                        <h1 className="text-5xl md:text-7xl font-black italic tracking-tighter mb-4">
-                            DATA{" "}
-                            <span className="text-transparent bg-clip-text bg-linear-to-r from-[#fe2c55] via-purple-500 to-[#25f4ee]">
-                                GUIDE
-                            </span>
+                        <h1 className="text-3xl md:text-5xl font-bold tracking-tight mb-2">
+                            TikTok <span className="text-transparent bg-clip-text bg-linear-to-r from-[#fe2c55] via-purple-500 to-[#25f4ee]">Guide</span>
                         </h1>
-                        <p className="text-gray-500 dark:text-gray-400 text-lg font-medium max-w-xl">
+                        <p className="text-[var(--mut)] text-base max-w-xl">
                             {translations[language].subtitle}
                         </p>
                     </motion.div>
 
                     {/* Language Switcher */}
-                    <div className="flex p-1.5 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl shadow-sm dark:backdrop-blur-md h-fit">
-                        {(['id', 'en'] as const).map((lang) => (
+                    <div className="flex p-1 bg-[var(--soft)] border border-[var(--line)] rounded-lg shadow-xs h-fit">
+                        {(['id', 'en', 'zh'] as const).map((lang) => (
                             <button
                                 key={lang}
-                                onClick={() => setLanguage(lang)}
-                                className={`px-6 py-2 rounded-xl text-sm font-black transition-all ${language === lang
-                                    ? 'bg-[#fe2c55] text-white shadow-lg shadow-[#fe2c55]/20'
-                                    : 'text-gray-500 hover:text-gray-800 dark:hover:text-white'
+                                onClick={() => setLocale(lang)}
+                                className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${language === lang
+                                    ? 'bg-[#fe2c55] text-white shadow-xs'
+                                    : 'text-[var(--mut)] hover:text-[var(--fg)]'
                                     }`}
                             >
                                 {lang.toUpperCase()}
@@ -201,22 +246,22 @@ export default function HowTikTokWorks() {
                         <motion.div
                             key={index}
                             variants={itemVariants}
-                            whileHover={{ y: -10, scale: 1.02 }}
-                            className="group relative bg-white dark:bg-[#1a1a20] border border-gray-200 dark:border-white/5 p-10 rounded-[3rem] shadow-sm dark:shadow-2xl transition-all duration-300 overflow-hidden"
+                            whileHover={{ y: -4 }}
+                            className="group relative bg-[var(--card)] border border-[var(--line)] p-6 rounded-2xl shadow-xs hover:border-[#fe2c55] transition-all duration-200 overflow-hidden"
                         >
                             {/* Watermark Number */}
-                            <div className="absolute top-6 right-10 text-7xl font-black italic text-gray-100 dark:text-white/2 pointer-events-none group-hover:text-[#fe2c55]/10 transition-colors">
+                            <div className="absolute top-4 right-6 text-5xl font-black text-[var(--line)] pointer-events-none group-hover:text-[#fe2c55]/10 transition-colors">
                                 {String(index + 1).padStart(2, '0')}
                             </div>
 
-                            <div className={`w-16 h-16 bg-linear-to-tr ${step.color} rounded-2xl flex items-center justify-center text-white text-3xl mb-8 shadow-lg`}>
+                            <div className={`w-12 h-12 bg-linear-to-tr ${step.color} rounded-xl flex items-center justify-center text-white text-xl mb-5 shadow-xs`}>
                                 {step.icon}
                             </div>
 
-                            <h3 className="text-2xl font-black italic mb-4 tracking-tight text-gray-900 dark:text-white group-hover:text-[#fe2c55] transition-colors">
+                            <h3 className="text-lg font-bold mb-2 tracking-tight text-[var(--fg)] group-hover:text-[#fe2c55] transition-colors">
                                 {step.title}
                             </h3>
-                            <p className="text-gray-500 dark:text-gray-400 leading-relaxed font-medium">
+                            <p className="text-sm text-[var(--mut)] leading-relaxed">
                                 {step.description}
                             </p>
                         </motion.div>
@@ -228,21 +273,21 @@ export default function HowTikTokWorks() {
                     variants={itemVariants}
                     initial="hidden"
                     animate="visible"
-                    className="mt-24 text-center space-y-10"
+                    className="mt-14 text-center space-y-6"
                 >
-                    <div className="inline-flex items-center gap-3 px-8 py-4 bg-red-50 dark:bg-[#fe2c55]/5 text-red-600 dark:text-[#fe2c55] rounded-2xl border border-red-100 dark:border-[#fe2c55]/20 max-w-2xl">
-                        <FiInfo className="shrink-0 w-6 h-6" />
-                        <p className="text-sm font-bold leading-relaxed text-left">
+                    <div className="inline-flex items-center gap-3 px-5 py-2.5 bg-[var(--soft)] text-[var(--fg)] rounded-xl border border-[var(--line)]">
+                        <FiInfo className="shrink-0 text-[#fe2c55]" />
+                        <p className="text-xs sm:text-sm font-medium">
                             {translations[language].note}
                         </p>
                     </div>
 
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                         <Link
                             to="/tiktok"
-                            className="flex items-center gap-3 px-12 py-6 bg-gray-900 dark:bg-white text-white dark:text-black rounded-full font-black text-lg hover:opacity-90 hover:scale-105 active:scale-95 transition-all uppercase tracking-tight shadow-xl"
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-[#fe2c55] text-white rounded-lg text-sm font-semibold hover:bg-[#e0264b] active:scale-98 transition-all shadow-xs"
                         >
-                            <FiUpload className="w-6 h-6" />
+                            <FiUpload className="w-4 h-4" />
                             {translations[language].cta_ready}
                         </Link>
 
@@ -250,7 +295,7 @@ export default function HowTikTokWorks() {
                             href="https://www.tiktok.com/setting/download-your-data"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-3 px-12 py-6 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-full font-black text-lg hover:bg-gray-50 dark:hover:bg-white/10 transition-all uppercase tracking-tight shadow-sm"
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--card)] border border-[var(--line)] rounded-lg text-sm font-semibold text-[var(--fg)] hover:border-[#fe2c55] transition-all"
                         >
                             {translations[language].cta_open} <FiExternalLink className="text-[#25f4ee]" />
                         </a>

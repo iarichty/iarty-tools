@@ -7,6 +7,7 @@ import PageTransition from './components/PageTransition';
 import LoadingPage from './components/LoadingPage';
 import ErrorBoundary from './components/ErrorBoundary';
 import ScrollToTop from './components/ScrollToTop';
+import GlobalLoader from './components/GlobalLoader';
 
 function AppRoutes() {
     const element = useRoutes(routes);
@@ -27,6 +28,7 @@ function App() {
     return (
         <Router>
             <ScrollToTop />
+            <GlobalLoader />
             <MainLayout>
                 <ErrorBoundary>
                     <Suspense fallback={<LoadingPage />}>

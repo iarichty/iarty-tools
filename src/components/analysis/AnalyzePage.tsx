@@ -142,7 +142,7 @@ export default function AnalyzePage({ config }: { config: AnalyzePageConfig }) {
 
             {config.background}
 
-            <main className="relative z-10 mx-auto max-w-5xl px-6 py-32">
+            <main className="relative z-10 mx-auto max-w-5xl px-4 py-10 sm:px-6 md:py-16">
                 <div className={config.headerRowClassName}>
                     <div>
                         <Link to="/" className={config.backLinkClassName}>
@@ -150,7 +150,7 @@ export default function AnalyzePage({ config }: { config: AnalyzePageConfig }) {
                             {t('common.back')}
                         </Link>
                         {config.heading}
-                        <p className="mt-2 font-medium text-slate-500 dark:text-slate-400">
+                        <p className="mt-2 text-base text-[var(--mut)]">
                             {config.subheading}
                         </p>
                     </div>

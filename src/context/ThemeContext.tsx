@@ -2,6 +2,10 @@ import { useCallback, useEffect, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { ThemeContext, type Theme } from './useTheme';
 
+type TransitionDoc = Document & {
+    startViewTransition?: (cb: () => void) => { ready: Promise<void> };
+};
+
 /** Resolve the initial theme, preferring the class set by the anti-FOUC script. */
 function getInitialTheme(): Theme {
     if (typeof document !== 'undefined') {
@@ -61,6 +65,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
                 const root = document.documentElement;
                 root.classList.remove('light', 'dark');
                 root.classList.add(targetIsDark ? 'dark' : 'light');
+                root.setAttribute('data-theme', targetIsDark ? 'dark' : 'light');
             }, 220);
 
             setTimeout(() => bloom.remove(), 700);
@@ -73,7 +78,9 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
         const root = document.documentElement;
         root.classList.remove('light', 'dark');
         root.classList.add(theme);
+        root.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
+        localStorage.setItem('iarty-theme', theme);
     }, [theme]);
 
     // Follow the OS preference while the user has not made an explicit choice.
@@ -90,6 +97,42 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
     const toggleTheme = (origin?: { x: number; y: number }) => {
         const next: Theme = theme === 'light' ? 'dark' : 'light';
+        const doc = typeof document !== 'undefined' ? (document as TransitionDoc) : null;
+        const root = typeof document !== 'undefined' ? document.documentElement : null;
+
+        if (origin && !prefersReducedMotion() && doc?.startViewTransition && root) {
+            const x = origin.x;
+            const y = origin.y;
+            const rad = Math.hypot(
+                Math.max(x, window.innerWidth - x),
+                Math.max(y, window.innerHeight - y),
+            );
+
+            const transition = doc.startViewTransition(() => {
+                flushSync(() => {
+                    setTheme(next);
+                });
+            });
+
+            transition.ready
+                .then(() => {
+                    root.animate(
+                        {
+                            clipPath: [
+                                `circle(0px at ${x}px ${y}px)`,
+                                `circle(${rad}px at ${x}px ${y}px)`,
+                            ],
+                        },
+                        {
+                            duration: 650,
+                            easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+                            pseudoElement: '::view-transition-new(root)',
+                        },
+                    );
+                })
+                .catch(() => undefined);
+            return;
+        }
 
         if (origin && !prefersReducedMotion()) {
             runBloomTransition(origin, next === 'dark');

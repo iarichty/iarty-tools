@@ -76,17 +76,17 @@ export default function UploadDropzone({
                     setIsDragging(false);
                     if (!isLoading) handleFiles(e.dataTransfer.files);
                 }}
-                className={`relative flex cursor-pointer flex-col items-center border-2 border-dashed p-12 text-center transition-all ${
-                    isDragging ? dragClassName : ''
+                className={`relative flex cursor-pointer flex-col items-center rounded-2xl border-2 border-dashed border-[var(--line)] bg-[var(--card)] p-10 md:p-14 text-center transition-all hover:border-[var(--blue)] ${
+                    isDragging ? `${dragClassName} border-[var(--blue)] ring-4 ring-[var(--blue)]/10` : ''
                 } ${isLoading ? 'cursor-wait opacity-90' : ''}`}
             >
                 <div
-                    className={`mb-6 flex h-20 w-20 rotate-3 items-center justify-center rounded-3xl shadow-lg ${accentClassName}`}
+                    className={`mb-5 flex h-16 w-16 items-center justify-center rounded-xl shadow-xs ${accentClassName}`}
                 >
-                    {icon ?? <FiUploadCloud className="h-10 w-10 text-white" />}
+                    {icon ?? <FiUploadCloud className="h-8 w-8 text-white" />}
                 </div>
-                <h3 className="mb-2 text-2xl font-bold">{title}</h3>
-                <p className="mx-auto mb-8 max-w-sm text-slate-500 dark:text-slate-400">
+                <h3 className="mb-2 text-2xl font-bold tracking-tight text-[var(--fg)]">{title}</h3>
+                <p className="mx-auto mb-6 max-w-sm text-sm text-[var(--mut)] leading-relaxed">
                     {description}
                 </p>
 
@@ -104,21 +104,21 @@ export default function UploadDropzone({
                     }}
                 />
 
-                <span className="inline-flex items-center gap-2 rounded-2xl bg-slate-900 px-8 py-4 font-bold text-white transition-transform active:scale-95 dark:bg-white dark:text-black">
+                <span className="inline-flex items-center gap-2 rounded-md bg-[var(--blue)] px-6 py-3 text-sm font-semibold text-white shadow-xs transition-colors hover:bg-[#0551b5] active:scale-98">
                     {isLoading ? t('upload.progress.reading') : buttonLabel}
                 </span>
 
                 {isLoading && (
                     <div className="mt-6 w-full max-w-sm" aria-live="polite">
-                        <div className="mb-2 flex items-center justify-between text-xs font-bold text-slate-500">
+                        <div className="mb-2 flex items-center justify-between text-xs font-semibold text-[var(--mut)]">
                             <span>{stageLabel}</span>
                             <span className="tabular-nums">
                                 {Math.round(progress?.percent ?? 0)}%
                             </span>
                         </div>
-                        <div className="h-2 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-white/10">
+                        <div className="h-2 w-full overflow-hidden rounded-full bg-[var(--line)]">
                             <div
-                                className="h-full rounded-full bg-slate-900 transition-[width] duration-200 dark:bg-white"
+                                className="h-full rounded-full bg-[var(--blue)] transition-[width] duration-200"
                                 style={{ width: `${Math.max(3, progress?.percent ?? 0)}%` }}
                             />
                         </div>
@@ -131,7 +131,7 @@ export default function UploadDropzone({
                     <button
                         type="button"
                         onClick={onDemo}
-                        className="inline-flex items-center gap-2 text-sm font-bold text-slate-500 underline-offset-4 transition-colors hover:text-purple-600 hover:underline dark:text-slate-400"
+                        className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--mut)] transition-colors hover:text-[var(--blue)] underline-offset-4 hover:underline"
                     >
                         <FiZap />
                         {t('home.demo')}

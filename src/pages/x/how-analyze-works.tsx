@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion';
 import { FiSettings, FiUser, FiChevronRight, FiDownload, FiFileText, FiUpload, FiArrowLeft, FiInfo, FiExternalLink } from 'react-icons/fi';
-import { useState, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import HelmetContainer from '@/components/HelmetContainer';
+import { useI18n } from '@/context/useI18n';
 
-type Language = 'en' | 'id';
+type Language = 'en' | 'id' | 'zh';
 
 type Step = {
     icon: ReactNode;
@@ -24,7 +25,8 @@ type TranslationType = {
 };
 
 export default function HowXWorks() {
-    const [language, setLanguage] = useState<Language>('en');
+    const { locale, setLocale } = useI18n();
+    const language = (locale === 'id' || locale === 'en' || locale === 'zh') ? locale : 'en';
 
     const translations: Record<Language, TranslationType> = {
         en: {
@@ -118,6 +120,52 @@ export default function HowXWorks() {
                     color: 'from-slate-600 to-blue-800'
                 }
             ]
+        },
+        zh: {
+            back: '返回仪表板',
+            title: '如何获取您的 X (Twitter) 数据',
+            subtitle: '按照以下官方步骤安全申请并下载您的 X 存档。',
+            note: '注意：X 可能需要长达 24 小时准备存档。下载链接将发送至您的邮箱。',
+            cta_ready: '我已有 ZIP 文件',
+            cta_open: '打开 X 设置',
+            steps: [
+                {
+                    icon: <FiSettings />,
+                    title: '打开设置',
+                    description: '打开 X，点击左侧菜单，然后选择“设置与隐私”。',
+                    color: 'from-slate-700 to-slate-900'
+                },
+                {
+                    icon: <FiUser />,
+                    title: '您的账户',
+                    description: '点击“您的账户”，然后找到“下载您的数据存档”。',
+                    color: 'from-slate-600 to-blue-800'
+                },
+                {
+                    icon: <FiChevronRight />,
+                    title: '验证与申请',
+                    description: '输入密码确认身份，然后点击“申请存档”。',
+                    color: 'from-blue-700 to-blue-900'
+                },
+                {
+                    icon: <FiDownload />,
+                    title: '下载 ZIP',
+                    description: '查收邮件，点击下载链接保存 twitter-*.zip 文件。',
+                    color: 'from-blue-600 to-cyan-700'
+                },
+                {
+                    icon: <FiFileText />,
+                    title: '保持 ZIP 格式',
+                    description: '不要解压文件——直接上传下载好的原始 .zip 压缩包。',
+                    color: 'from-cyan-600 to-slate-700'
+                },
+                {
+                    icon: <FiUpload />,
+                    title: '上传至 IARTY',
+                    description: '将文件拖入分析器即可查看粉丝、关注以及未回关名单。',
+                    color: 'from-slate-600 to-blue-800'
+                }
+            ]
         }
     };
 
@@ -135,45 +183,45 @@ export default function HowXWorks() {
     };
 
     return (
-        <div className="min-h-screen bg-[#fafafa] dark:bg-[#000000] text-slate-900 dark:text-slate-100 transition-colors duration-300">
+        <div className="min-h-screen bg-[var(--bg)] text-[var(--fg)] transition-colors duration-300">
             <HelmetContainer
                 title="How to get your X (Twitter) data | IARTY Tools"
                 path="/x/how-analyze-works"
             />
-            <div className="fixed inset-0 pointer-events-none overflow-hidden opacity-40 dark:opacity-30">
-                <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-slate-500 rounded-full blur-[120px]" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-blue-500/70 rounded-full blur-[120px]" />
+            <div className="fixed inset-0 pointer-events-none overflow-hidden opacity-30 dark:opacity-15">
+                <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-slate-500/20 rounded-full blur-[120px]" />
+                <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-blue-500/20 rounded-full blur-[120px]" />
             </div>
 
-            <main className="relative z-10 max-w-5xl mx-auto px-6 py-24 md:py-32">
-                <div className="flex flex-col md:flex-row md:items-center justify-between mb-16 gap-8">
+            <main className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+                <div className="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6">
                     <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
                         <button
                             onClick={() => window.history.back()}
-                            className="group flex items-center gap-2 text-xs font-black tracking-widest text-slate-500 hover:text-black dark:hover:text-white transition-colors mb-6"
+                            className="group flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[var(--mut)] hover:text-[var(--blue)] transition-colors mb-4 cursor-pointer"
                         >
                             <FiArrowLeft className="group-hover:-translate-x-1 transition-transform w-4 h-4" />
                             {translations[language].back}
                         </button>
-                        <h1 className="text-4xl md:text-6xl font-black tracking-tighter mb-4">
+                        <h1 className="text-3xl md:text-5xl font-bold tracking-tight mb-2">
                             {translations[language].title.split(' ').slice(0, -1).join(' ')}{' '}
                             <span className="text-transparent bg-clip-text bg-linear-to-r from-slate-700 to-blue-500 dark:from-white dark:to-blue-400">
                                 {translations[language].title.split(' ').slice(-1)}
                             </span>
                         </h1>
-                        <p className="text-slate-500 dark:text-slate-400 text-lg font-medium max-w-xl">
+                        <p className="text-[var(--mut)] text-base max-w-xl">
                             {translations[language].subtitle}
                         </p>
                     </motion.div>
 
-                    <div className="flex p-1.5 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl shadow-sm h-fit">
-                        {(['id', 'en'] as const).map((lang) => (
+                    <div className="flex p-1 bg-[var(--soft)] border border-[var(--line)] rounded-lg shadow-xs h-fit">
+                        {(['id', 'en', 'zh'] as const).map((lang) => (
                             <button
                                 key={lang}
-                                onClick={() => setLanguage(lang)}
-                                className={`px-6 py-2 rounded-xl text-sm font-bold transition-all ${language === lang
-                                    ? 'bg-black dark:bg-white text-white dark:text-black shadow-lg'
-                                    : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
+                                onClick={() => setLocale(lang)}
+                                className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${language === lang
+                                    ? 'bg-[var(--card)] text-[var(--blue)] shadow-xs'
+                                    : 'text-[var(--mut)] hover:text-[var(--fg)]'
                                     }`}
                             >
                                 {lang.toUpperCase()}
@@ -192,21 +240,21 @@ export default function HowXWorks() {
                         <motion.div
                             key={index}
                             variants={itemVariants}
-                            whileHover={{ y: -8 }}
-                            className="group relative bg-white dark:bg-gray-900/50 border border-slate-200 dark:border-white/10 p-8 rounded-[2.5rem] shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden"
+                            whileHover={{ y: -4 }}
+                            className="group relative bg-[var(--card)] border border-[var(--line)] p-6 rounded-2xl shadow-xs hover:border-[var(--blue)] transition-all duration-200 overflow-hidden"
                         >
-                            <div className="absolute top-6 right-8 text-6xl font-black text-slate-100 dark:text-white/3 pointer-events-none group-hover:text-blue-500/10 transition-colors">
+                            <div className="absolute top-4 right-6 text-5xl font-black text-[var(--line)] pointer-events-none group-hover:text-[var(--blue)]/10 transition-colors">
                                 {String(index + 1).padStart(2, '0')}
                             </div>
 
-                            <div className={`w-14 h-14 bg-linear-to-tr ${step.color} rounded-2xl flex items-center justify-center text-white text-2xl mb-6 shadow-lg shadow-blue-500/20`}>
+                            <div className={`w-12 h-12 bg-linear-to-tr ${step.color} rounded-xl flex items-center justify-center text-white text-xl mb-5 shadow-xs`}>
                                 {step.icon}
                             </div>
 
-                            <h3 className="text-xl font-bold mb-3 tracking-tight text-slate-800 dark:text-white">
+                            <h3 className="text-lg font-bold mb-2 tracking-tight text-[var(--fg)] group-hover:text-[var(--blue)] transition-colors">
                                 {step.title}
                             </h3>
-                            <p className="text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                            <p className="text-sm text-[var(--mut)] leading-relaxed">
                                 {step.description}
                             </p>
                         </motion.div>
@@ -217,28 +265,28 @@ export default function HowXWorks() {
                     variants={itemVariants}
                     initial="hidden"
                     animate="visible"
-                    className="mt-20 text-center space-y-8"
+                    className="mt-14 text-center space-y-6"
                 >
-                    <div className="inline-flex items-center gap-3 px-6 py-3 bg-blue-50 dark:bg-blue-900/10 text-blue-600 dark:text-blue-400 rounded-2xl border border-blue-100 dark:border-blue-900/30">
-                        <FiInfo className="shrink-0" />
-                        <p className="text-sm font-bold tracking-tight">
+                    <div className="inline-flex items-center gap-3 px-5 py-2.5 bg-[var(--soft)] text-[var(--fg)] rounded-xl border border-[var(--line)]">
+                        <FiInfo className="shrink-0 text-[var(--blue)]" />
+                        <p className="text-xs sm:text-sm font-medium">
                             {translations[language].note}
                         </p>
                     </div>
 
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                         <Link
                             to="/x"
-                            className="flex items-center gap-2 px-10 py-5 bg-linear-to-r from-slate-900 to-blue-600 text-white rounded-3xl font-black hover:scale-105 active:scale-95 transition-all shadow-xl shadow-blue-500/20"
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--blue)] text-white rounded-lg text-sm font-semibold hover:bg-[#0551b5] active:scale-98 transition-all shadow-xs"
                         >
-                            <FiUpload className="w-5 h-5" aria-hidden />
+                            <FiUpload className="w-4 h-4" aria-hidden />
                             {translations[language].cta_ready}
                         </Link>
                         <a
                             href="https://x.com/settings/download_your_data"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-2 px-10 py-5 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-3xl font-black hover:bg-slate-50 dark:hover:bg-white/10 transition-all"
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--card)] border border-[var(--line)] rounded-lg text-sm font-semibold text-[var(--fg)] hover:border-[var(--blue)] transition-all"
                         >
                             {translations[language].cta_open} <FiExternalLink aria-hidden />
                         </a>

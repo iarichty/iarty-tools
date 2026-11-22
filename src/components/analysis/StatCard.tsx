@@ -13,16 +13,16 @@ interface Props {
 /** A single summary metric tile. */
 export default function StatCard({ label, value, accent, icon, isRatio }: Props) {
     return (
-        <div className="rounded-4xl border border-slate-200 bg-white p-6 shadow-sm dark:border-white/10 dark:bg-gray-900">
-            <div className="mb-4 flex items-center justify-between">
-                <p className="text-xs font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">
+        <div className="rounded-xl border border-[var(--line)] bg-[var(--card)] p-5 shadow-xs transition-colors">
+            <div className="mb-3 flex items-center justify-between">
+                <p className="text-xs font-semibold uppercase tracking-wider text-[var(--mut)]">
                     {label}
                 </p>
                 <span className="text-lg" style={{ color: accent }} aria-hidden>
                     {icon}
                 </span>
             </div>
-            <h3 className="text-3xl font-black tabular-nums" style={{ color: accent }}>
+            <h3 className="text-3xl font-bold tabular-nums" style={{ color: accent }}>
                 {isRatio ? value : <AnimatedNumber value={Number(value)} />}
             </h3>
         </div>

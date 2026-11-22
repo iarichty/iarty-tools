@@ -7,20 +7,22 @@
  * keep the bundle lean and the mental model simple.
  */
 
-export type Locale = 'en' | 'id';
+export type Locale = 'en' | 'id' | 'zh';
 
-export const LOCALES: Locale[] = ['en', 'id'];
+export const LOCALES: Locale[] = ['en', 'id', 'zh'];
 
 /** Human-readable label for the language switcher. */
 export const LOCALE_LABELS: Record<Locale, string> = {
     en: 'English',
     id: 'Bahasa Indonesia',
+    zh: '中文 (简体)',
 };
 
 /** Short label (2 letters) for the compact switcher. */
 export const LOCALE_SHORT: Record<Locale, string> = {
     en: 'EN',
     id: 'ID',
+    zh: 'ZH',
 };
 
 type Dict = Record<string, string>;
@@ -271,7 +273,119 @@ const id: Dict = {
         'Anda melihat data contoh. Unggah hasil export Anda untuk melihat hasil nyata.',
 };
 
-const DICTS: Record<Locale, Dict> = { en, id };
+const zh: Dict = {
+    'nav.home': '首页',
+    'nav.instagram': 'Instagram',
+    'nav.tiktok': 'TikTok',
+    'nav.threads': 'Threads',
+    'nav.x': 'X (Twitter)',
+    'nav.theme': '切换主题',
+    'nav.language': '切换语言',
+    'nav.openMenu': '打开菜单',
+    'nav.closeMenu': '关闭菜单',
+
+    'common.back': '返回',
+    'common.viewProfile': '查看个人主页',
+    'common.loading': '加载中…',
+    'common.processing': '处理中…',
+    'common.cancel': '取消',
+    'common.close': '关闭',
+    'common.copy': '复制',
+    'common.copied': '已复制！',
+
+    'home.title1': 'IARTY',
+    'home.title2': 'Tools',
+    'home.tagline': '专业级社交媒体洞察与分析工具。',
+    'home.noAccess': '无需任何账号访问权限。',
+    'home.analyzeAccount': '分析账号',
+    'home.feature.privacy.title': '极致隐私保护',
+    'home.feature.privacy.desc': '完全纯客户端处理。您的数据绝不会离开此浏览器标签页。',
+    'home.feature.fast.title': '极速响应',
+    'home.feature.fast.desc': '无 API 限制。数秒内直接在设备上扫描分析数千个主页资料。',
+    'home.feature.insights.title': '实用洞察分析',
+    'home.feature.insights.desc': '立即发现谁取关了您，以及哪些好友值得您回关。',
+    'home.ig.desc': '即时分析粉丝和关注列表，快速查找未回关您的用户。',
+    'home.tt.desc': '深度探索您的 TikTok 社交关系，在本地追踪粉丝增长动态。',
+    'home.demo': '试用演示样本数据',
+    'home.offline': '支持完全离线运行',
+    'home.comingSoon': '即将推出',
+    'home.threads.desc': '直接从 Meta 账户中心导出文件分析您的 Threads 关注关系。',
+    'home.x.desc': '导入您的 X (Twitter) 数据存档以获取同款深度分析 — 无需账号授权。',
+
+    'upload.ig.title': '上传您的 ZIP 文件',
+    'upload.ig.desc': '将 Instagram 数据导出压缩包拖至此处，或从文件夹中选择。',
+    'upload.ig.button': '选择 ZIP 文件',
+    'upload.tt.title': '上传您的 TikTok 文件 (.zip)',
+    'upload.tt.desc': '请确保您从 TikTok 下载的数据格式为 JSON。',
+    'upload.tt.button': '立即选择文件',
+    'upload.threads.title': '上传您的 Threads ZIP 文件',
+    'upload.threads.desc': '上传从 Meta 账户中心下载的 Threads 关注关系压缩包 (.zip)。',
+    'upload.threads.button': '选择 ZIP 文件',
+    'upload.x.title': '上传您的 X (Twitter) 存档文件',
+    'upload.x.desc': '将从 X 接收到的 twitter-*.zip 压缩包拖至此处。',
+    'upload.x.button': '选择存档文件',
+    'upload.progress.reading': '正在读取文件…',
+    'upload.progress.unzipping': '正在解压…',
+    'upload.progress.parsing': '正在分析关注关系…',
+    'upload.preview': '已检测到',
+    'upload.previewFollowers': '粉丝',
+    'upload.previewFollowing': '关注中',
+
+    'stat.followers': '粉丝',
+    'stat.following': '关注中',
+    'stat.notFollowingBack': '未回关我',
+    'stat.youDontFollowBack': '我未回关',
+    'stat.ratio': '粉丝比例',
+    'stat.mutuals': '互相关注',
+    'stat.fans': '粉丝 (我未关注)',
+    'stat.avgFollowAge': '平均关注时长',
+    'stat.days': '天',
+
+    'tab.notFollowingBack': '未回关我',
+    'tab.youDontFollowBack': '我未回关',
+    'tab.followers': '粉丝',
+    'tab.following': '关注中',
+    'tab.mutuals': '互相关注',
+    'tab.fans': '粉丝',
+
+    'search.placeholder': '搜索用户名…',
+    'sort.label': '排序方式',
+    'sort.newest': '最新',
+    'sort.oldest': '最早',
+    'results.empty': '未找到相关结果。',
+    'results.copyAll': '复制全部',
+    'results.exportCsv': '导出 CSV',
+    'results.exportAll': '下载全部 (ZIP)',
+    'results.exportPng': '保存为图片',
+    'results.selectAll': '全选',
+    'results.selected': '已选择 {count} 项',
+    'results.openSelected': '打开选中主页',
+    'results.exportSummary': '导出摘要',
+    'results.popupBlocked': '请允许弹出窗口以批量打开多个主页资料。',
+    'a11y.resultCategory': '结果分类',
+    'a11y.selectUser': '选择 {name}',
+
+    'insights.title': '深度洞察',
+    'insights.growth': '粉丝增长趋势',
+    'insights.growthEmpty': '时间记录数据不足，暂无法生成增长图表。',
+    'insights.mutual': '互相关注关系',
+    'insights.fans': '单向粉丝 (您未关注对方)',
+    'insights.oldest': '最早关注的用户',
+
+    'unfollower.title': '自上次分析以来的变化',
+    'unfollower.subtitle': '与 {date} 保存的快照对比。',
+    'unfollower.unfollowedYou': '已取关您的用户',
+    'unfollower.newFollowers': '新增粉丝',
+    'unfollower.youUnfollowed': '您已取关的用户',
+    'unfollower.youNowFollow': '您新关注的用户',
+    'unfollower.none': '此分类在此期间没有发生变动。',
+
+    'footer.analyzed': '已分析 {count} 个账号 — 完全在您的本地浏览器中处理。',
+
+    'demo.banner': '您正在查看演示样本数据。上传您自己的导出文件以查看真实分析结果。',
+};
+
+const DICTS: Record<Locale, Dict> = { en, id, zh };
 
 /** Look up a translation, interpolating `{name}` placeholders from `vars`. */
 export function translate(
@@ -279,7 +393,7 @@ export function translate(
     key: string,
     vars?: Record<string, string | number>,
 ): string {
-    const template = DICTS[locale][key] ?? DICTS.en[key] ?? key;
+    const template = DICTS[locale]?.[key] ?? DICTS.en[key] ?? key;
     if (!vars) return template;
     return template.replace(/\{(\w+)\}/g, (_, name: string) =>
         name in vars ? String(vars[name]) : `{${name}}`,
@@ -291,5 +405,6 @@ export function detectLocale(): Locale {
     if (typeof navigator === 'undefined') return 'en';
     const lang = navigator.language?.toLowerCase() ?? '';
     if (lang.startsWith('id')) return 'id';
+    if (lang.startsWith('zh')) return 'zh';
     return 'en';
 }

@@ -153,6 +153,7 @@ const MetadataConfig: MetadataConfigType = {
         languages: {
             "en": DOMAIN,
             "id": DOMAIN,
+            "zh": DOMAIN,
             "x-default": DOMAIN,
         },
     },

@@ -6,19 +6,65 @@
 /* ============================================
    BASE LAYER - Light & Dark Mode Foundation
    ============================================ */
-@layer base {
-  :root {
-    color-scheme: light;
-  }
+:root {
+  --page: #061a33;
+  --bg: #ffffff;
+  --fg: #0e1726;
+  --mut: #5b6678;
+  --line: #e6e9ef;
+  --card: #ffffff;
+  --soft: #f6f8fb;
+  --blue: #0b7bff;
+  --dot: #c9d0dc;
+  --bt: #0a5fd0;
+  color-scheme: light;
+}
 
-  html.dark {
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page: #02070f;
+    --bg: #0c1320;
+    --fg: #eef2f9;
+    --mut: #93a0b5;
+    --line: #1d2738;
+    --card: #111a2b;
+    --soft: #0f1726;
+    --dot: #2a3548;
+    --bt: #5aa5ff;
     color-scheme: dark;
   }
+}
 
+html.dark, :root[data-theme="dark"] {
+  --page: #02070f;
+  --bg: #0c1320;
+  --fg: #eef2f9;
+  --mut: #93a0b5;
+  --line: #1d2738;
+  --card: #111a2b;
+  --soft: #0f1726;
+  --dot: #2a3548;
+  --bt: #5aa5ff;
+  color-scheme: dark;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2;
+}
+
+@layer base {
   body {
     font-family: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    background-color: #fafafa;
-    color: #111827;
+    background-color: var(--bg);
+    color: var(--fg);
     transition: background-color 0.3s ease, color 0.3s ease;
     margin: 0;
     min-height: 100vh;
@@ -27,8 +73,8 @@
   }
 
   html.dark body {
-    background-color: #08080a;
-    color: #f9fafb;
+    background-color: var(--bg);
+    color: var(--fg);
   }
 
   *, *::before, *::after {

@@ -16,20 +16,20 @@ function buildConfig(t: (key: string) => string): AnalyzePageConfig {
         seoTitle: 'TikTok Insights | IARTY Tools',
         path: '/tiktok',
         wrapperClassName:
-            'min-h-screen bg-[#fafafa] text-gray-900 transition-colors duration-300 selection:bg-[#fe2c55]/20 dark:bg-[#0f0f13] dark:text-white',
+            'min-h-screen bg-[var(--bg)] text-[var(--fg)] transition-colors duration-300',
         background: (
-            <div className="pointer-events-none fixed inset-0 overflow-hidden">
-                <div className="absolute left-[-10%] top-[-10%] h-[50%] w-[50%] rounded-full bg-[#fe2c55] opacity-5 blur-[150px] dark:opacity-10" />
-                <div className="absolute bottom-[-10%] right-[-10%] h-[50%] w-[50%] rounded-full bg-[#25f4ee] opacity-5 blur-[150px] dark:opacity-10" />
+            <div className="pointer-events-none fixed inset-0 overflow-hidden opacity-25 dark:opacity-10">
+                <div className="absolute left-[-10%] top-[-10%] h-[50%] w-[50%] rounded-full bg-[#fe2c55] blur-[150px]" />
+                <div className="absolute bottom-[-10%] right-[-10%] h-[50%] w-[50%] rounded-full bg-[#25f4ee] blur-[150px]" />
             </div>
         ),
         backLinkClassName:
-            'group mb-4 flex w-fit items-center gap-2 text-sm font-bold uppercase tracking-widest text-gray-500 transition-colors hover:text-[#fe2c55]',
+            'group mb-4 flex w-fit items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[var(--mut)] transition-colors hover:text-[#fe2c55]',
         heading: (
-            <h1 className="text-5xl font-black italic tracking-tighter">
-                TIKTOK{' '}
+            <h1 className="text-3xl font-bold tracking-tight md:text-5xl">
+                TikTok{' '}
                 <span className="bg-linear-to-r from-[#fe2c55] via-purple-500 to-[#25f4ee] bg-clip-text text-transparent">
-                    INSIGHTS
+                    Insights
                 </span>
             </h1>
         ),
@@ -40,18 +40,18 @@ function buildConfig(t: (key: string) => string): AnalyzePageConfig {
             icon: <FiHelpCircle className="text-[#fe2c55]" aria-hidden />,
         },
         headerRowClassName:
-            'mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end',
+            'mb-8 flex flex-col justify-between gap-6 md:flex-row md:items-end',
         guideButtonClassName:
-            'flex items-center gap-2 rounded-full border border-gray-200 bg-white px-6 py-3 text-sm font-bold shadow-sm transition-all hover:bg-gray-50 dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10',
+            'flex items-center gap-2 rounded-md border border-[var(--line)] bg-[var(--card)] px-4 py-2 text-xs font-semibold text-[var(--fg)] shadow-xs transition-colors hover:border-[#fe2c55] active:scale-98',
         upload: {
             title: t('upload.tt.title'),
             description: t('upload.tt.desc'),
             buttonLabel: t('upload.tt.button'),
             accentClassName: 'bg-linear-to-br from-[#fe2c55] to-[#25f4ee]',
-            dragClassName: 'border-[#fe2c55] bg-[#fe2c55]/5',
+            dragClassName: 'border-[#fe2c55] bg-[var(--soft)]',
         },
         stats: [
-            { label: t('stat.followers'), key: 'followers', icon: <FiUsers />, accent: '#6366f1' },
+            { label: t('stat.followers'), key: 'followers', icon: <FiUsers />, accent: '#0b7bff' },
             { label: t('stat.following'), key: 'following', icon: <FiUsers />, accent: '#25f4ee' },
             {
                 label: t('stat.notFollowingBack'),
@@ -69,33 +69,33 @@ function buildConfig(t: (key: string) => string): AnalyzePageConfig {
         },
         resultsTheme: {
             cardClassName:
-                'overflow-hidden rounded-[2.5rem] border border-slate-200 bg-white shadow-xl dark:border-white/5 dark:bg-[#1a1a20]',
+                'overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--card)] shadow-xs',
             headerClassName:
-                'border-b border-slate-100 bg-slate-50/50 p-8 dark:border-white/5 dark:bg-white/2',
+                'border-b border-[var(--line)] bg-[var(--soft)] p-6',
             tabListClassName:
-                'flex w-fit rounded-2xl border border-slate-200 bg-slate-100 p-1.5 dark:border-white/5 dark:bg-black/40',
-            tabActiveClassName: 'bg-[#fe2c55] text-white shadow-lg',
-            tabInactiveClassName: 'text-slate-500 hover:text-slate-800 dark:hover:text-white',
+                'flex w-fit rounded-lg border border-[var(--line)] bg-[var(--card)] p-1',
+            tabActiveClassName: 'bg-[#fe2c55] text-white shadow-xs font-semibold',
+            tabInactiveClassName: 'text-[var(--mut)] hover:text-[var(--fg)]',
             searchClassName:
-                'rounded-2xl border border-slate-200 bg-slate-100 py-3 focus:border-[#fe2c55] focus:ring-2 focus:ring-[#fe2c55]/20 dark:border-white/10 dark:bg-black/40 md:w-72',
+                'rounded-lg border border-[var(--line)] bg-[var(--card)] text-[var(--fg)] py-2 focus:border-[#fe2c55] focus:ring-1 focus:ring-[#fe2c55] md:w-72',
             sortAccentClassName: 'bg-[#25f4ee]',
-            sortActiveTextClassName: 'text-black',
+            sortActiveTextClassName: 'text-black font-semibold',
             gridClassName:
-                'grid max-h-[500px] grid-cols-1 gap-5 overflow-y-auto pr-4 sm:grid-cols-2 lg:grid-cols-3',
+                'grid max-h-[500px] grid-cols-1 gap-4 overflow-y-auto pr-2 sm:grid-cols-2 lg:grid-cols-3',
             avatarClassName:
-                'rounded-2xl border border-slate-200 bg-linear-to-tr from-[#fe2c55]/10 to-[#25f4ee]/10 text-[#fe2c55] dark:border-white/10',
+                'rounded-xl border border-[var(--line)] bg-linear-to-tr from-[#fe2c55]/10 to-[#25f4ee]/10 text-[#fe2c55]',
             linkClassName:
-                'border border-slate-200 bg-white text-slate-700 hover:bg-[#fe2c55] hover:text-white dark:border-white/10 dark:bg-white/5 dark:text-slate-300',
+                'border border-[var(--line)] bg-[var(--card)] text-[var(--fg)] hover:border-[#fe2c55] hover:text-[#fe2c55]',
             sortLayoutId: 'tt-sort-pill',
             dateLabel: 'Active',
             platform: 'tiktok',
         },
         panelCardClassName:
-            'rounded-[2.5rem] border border-slate-200 bg-white p-8 shadow-xl dark:border-white/5 dark:bg-[#1a1a20]',
-        resultsSpacingClassName: 'space-y-10',
+            'rounded-2xl border border-[var(--line)] bg-[var(--card)] p-6 shadow-xs',
+        resultsSpacingClassName: 'space-y-6',
         errorClassName:
-            'mt-8 rounded-3xl border border-red-200 bg-red-50 p-6 text-center font-black text-red-600 dark:border-[#fe2c55]/20 dark:bg-[#fe2c55]/10 dark:text-[#fe2c55]',
-        footerClassName: 'mt-8 text-center text-sm text-gray-500 dark:text-gray-400',
+            'mt-6 rounded-lg border border-red-200 bg-red-50 p-4 text-center text-sm font-semibold text-red-600 dark:border-[#fe2c55]/20 dark:bg-[#fe2c55]/10 dark:text-[#fe2c55]',
+        footerClassName: 'mt-6 text-center text-xs text-[var(--mut)]',
         accent: '#fe2c55',
     };
 }
