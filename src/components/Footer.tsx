@@ -27,7 +27,7 @@ export default function Footer() {
                             <span>by</span>
                             <a href="https://fiqtor.pages.dev" target="_blank" rel="noopener noreferrer" className="font-semibold text-[var(--blue)] hover:underline">fiqtor.pages.dev</a>
                             <span>·</span>
-                            <a href="https://iarty.id" target="_blank" rel="noopener noreferrer" className="font-semibold text-[var(--blue)] hover:underline">iarty.id</a>
+                            <a href="https://iarty.biz.id" target="_blank" rel="noopener noreferrer" className="font-semibold text-[var(--blue)] hover:underline">iarty.biz.id</a>
                         </div>
                     </div>
 
