@@ -262,8 +262,11 @@ export default function DevToolsPage() {
                 ))}
             </div>
 
-            {/* Interactive Grid: 4 columns with proper gap-4 */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-8">
+            {/* Interactive Grid: 3 columns on tablet, 3 columns on desktop with prominent gap */}
+            <div
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-6 lg:gap-8 mb-10"
+                style={{ gap: '1.5rem' }}
+            >
                 {filteredTools.map((item) => {
                     const Icon = item.icon;
                     const isActive = activeTab === item.id;
