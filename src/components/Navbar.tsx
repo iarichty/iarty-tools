@@ -143,7 +143,7 @@ export default function Navbar() {
                         <div className="relative w-9 h-9 overflow-hidden rounded-xl border border-black/5 dark:border-white/10 shadow-sm transition-transform group-hover:scale-110">
                             <img src="/img/icon.webp" alt="icon" className="object-cover w-full h-full" />
                         </div>
-                        <span className="hidden sm:block text-lg font-black tracking-tight text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                        <span className="hidden sm:block text-lg font-black tracking-tight text-[var(--fg)] group-hover:text-[var(--blue)] transition-colors">
                             IARTY TOOLS
                         </span>
                     </Link>
@@ -151,7 +151,7 @@ export default function Navbar() {
                     {/* Desktop Navigation */}
                     <div
                         ref={navRef}
-                        className="hidden md:flex items-center bg-gray-100/50 dark:bg-white/5 rounded-full px-2 py-1 gap-1"
+                        className="hidden md:flex items-center bg-gray-100/60 dark:bg-white/5 rounded-full p-1.5 gap-1 border border-black/5 dark:border-white/5"
                     >
                         {menuItems.map((item) => {
                             const isActive = item.href === activeHref;
@@ -160,7 +160,7 @@ export default function Navbar() {
                                     key={item.href}
                                     to={item.href}
                                     aria-current={isActive ? 'page' : undefined}
-                                    className={`relative flex items-center space-x-2 px-4 py-2 text-sm font-semibold rounded-full transition-colors duration-300 ${isActive
+                                    className={`relative flex items-center space-x-2 px-3.5 py-1.5 text-xs lg:text-sm font-semibold rounded-full transition-colors duration-300 ${isActive
                                         ? 'text-[var(--blue)] font-bold'
                                         : 'text-[var(--mut)] hover:text-[var(--fg)]'
                                         }`}
@@ -168,7 +168,7 @@ export default function Navbar() {
                                     {isActive && (
                                         <motion.span
                                             layoutId="nav-active-pill"
-                                            className="absolute inset-0 bg-white dark:bg-white/10 shadow-md rounded-full -z-10"
+                                            className="absolute inset-0 bg-white dark:bg-white/10 shadow-sm rounded-full -z-10"
                                             transition={{ type: 'spring', stiffness: 420, damping: 34 }}
                                         />
                                     )}
@@ -216,8 +216,8 @@ export default function Navbar() {
                                             to={item.href}
                                             onClick={() => setIsMobileMenuOpen(false)}
                                             className={`relative flex items-center space-x-4 px-4 py-3 rounded-2xl font-bold transition-all ${isActive
-                                                ? 'bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400'
-                                                : 'text-gray-600 dark:text-gray-300 hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:text-purple-600 dark:hover:text-purple-400'
+                                                ? 'bg-blue-50 dark:bg-blue-900/20 text-[var(--blue)]'
+                                                : 'text-[var(--mut)] hover:bg-[var(--soft)] hover:text-[var(--fg)]'
                                                 }`}
                                         >
                                             <item.icon className="w-5 h-5" />

@@ -45,3 +45,4 @@ export default function Base64Page() {
         </div>
     );
 }
+
