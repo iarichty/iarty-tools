@@ -13,6 +13,7 @@ import { MathSuiteTool } from '@/components/devtools/MathSuiteTool';
 import { WebSeoSuiteTool } from '@/components/devtools/WebSeoSuiteTool';
 import { SecuritySuiteTool } from '@/components/devtools/SecuritySuiteTool';
 import { CssEverydaySuiteTool } from '@/components/devtools/CssEverydaySuiteTool';
+import { Link } from 'react-router-dom';
 import {
     FiCode,
     FiCheckSquare,
@@ -27,8 +28,7 @@ import {
     FiSearch,
     FiShield,
     FiLayout,
-    FiStar,
-    FiCompass,
+    FiExternalLink,
     FiX
 } from 'react-icons/fi';
 
@@ -52,6 +52,7 @@ type Category = 'all' | 'developer' | 'format' | 'security' | 'math' | 'web';
 interface ToolItem {
     id: ActiveTab;
     name: string;
+    path: string;
     category: Category;
     description: string;
     badge?: string;
@@ -62,6 +63,7 @@ const TOOLS_LIST: ToolItem[] = [
     {
         id: 'json-formatter',
         name: 'JSON Formatter',
+        path: '/developer/json',
         category: 'format',
         description: 'Beautify, minify, sort keys, YAML/XML/CSV/TS converter',
         badge: 'Popular',
@@ -70,6 +72,7 @@ const TOOLS_LIST: ToolItem[] = [
     {
         id: 'json-validator',
         name: 'JSON Validator',
+        path: '/developer/json',
         category: 'format',
         description: 'Detailed syntax error diagnostics & JSON schema validation',
         icon: FiCheckSquare
@@ -77,6 +80,7 @@ const TOOLS_LIST: ToolItem[] = [
     {
         id: 'base64',
         name: 'Base64 Tool',
+        path: '/developer/base64',
         category: 'format',
         description: 'Encode/decode text, images, files & URL-safe Base64',
         icon: FiFileText
@@ -84,6 +88,7 @@ const TOOLS_LIST: ToolItem[] = [
     {
         id: 'url',
         name: 'URL Tool',
+        path: '/developer/url',
         category: 'web',
         description: 'Encode, decode, parse components & strip UTM tracking',
         icon: FiLink
@@ -91,6 +96,7 @@ const TOOLS_LIST: ToolItem[] = [
     {
         id: 'uuid',
         name: 'UUID Generator',
+        path: '/developer/uuid',
         category: 'developer',
         description: 'Generate v1, v4, v5, and v7 time-sortable UUIDs in bulk',
         badge: 'v7 Sortable',
@@ -99,6 +105,7 @@ const TOOLS_LIST: ToolItem[] = [
     {
         id: 'qr',
         name: 'QR Code Tool',
+        path: '/developer/qr',
         category: 'web',
         description: 'Generate QR codes for URLs, Wi-Fi, vCard with SVG/PNG export',
         badge: 'Styling',
@@ -107,6 +114,7 @@ const TOOLS_LIST: ToolItem[] = [
     {
         id: 'password',
         name: 'Password Generator',
+        path: '/developer/password',
         category: 'security',
         description: 'Secure passwords, memorable passphrases, PINs with crack-time estimation',
         badge: 'Entropy',
@@ -115,6 +123,7 @@ const TOOLS_LIST: ToolItem[] = [
     {
         id: 'security',
         name: 'Privacy & Security',
+        path: '/developer/security',
         category: 'security',
         description: 'SHA-256/512 hashing, HMAC, AES-256-GCM encryption & PII masking',
         badge: 'Crypto',
@@ -123,6 +132,7 @@ const TOOLS_LIST: ToolItem[] = [
     {
         id: 'text',
         name: 'Text & Diff Suite',
+        path: '/developer/text',
         category: 'developer',
         description: 'Word/char counter, case converter, slugify, deduplicate & visual diff',
         icon: FiType
@@ -130,6 +140,7 @@ const TOOLS_LIST: ToolItem[] = [
     {
         id: 'math',
         name: 'Math & Numbers',
+        path: '/developer/math',
         category: 'math',
         description: 'Base converter (BigInt), percentage, random numbers, units & dates',
         icon: FiPercent
@@ -137,6 +148,7 @@ const TOOLS_LIST: ToolItem[] = [
     {
         id: 'seo',
         name: 'Web & SEO Suite',
+        path: '/developer/seo',
         category: 'web',
         description: 'Open Graph tags, SERP snippet preview, sitemap.xml & contrast checker',
         icon: FiSearch
@@ -144,6 +156,7 @@ const TOOLS_LIST: ToolItem[] = [
     {
         id: 'css',
         name: 'CSS & Utilities',
+        path: '/developer/css',
         category: 'developer',
         description: 'Interactive box-shadow generator, border-radius tuner & decision maker',
         icon: FiLayout
@@ -151,6 +164,7 @@ const TOOLS_LIST: ToolItem[] = [
     {
         id: 'dev',
         name: 'Dev Helpers',
+        path: '/developer',
         category: 'developer',
         description: 'JWT token decoder, Unix timestamp converter, color picker & SQL formatter',
         icon: FiCpu
@@ -184,57 +198,46 @@ export default function DevToolsPage() {
 
     const activeToolInfo = TOOLS_LIST.find(t => t.id === activeTab) || TOOLS_LIST[0];
 
-    const faqItems = [
-        {
-            question: 'Are all developer and online utilities processed client-side?',
-            answer: 'Yes! All operations including JSON formatting, UUID generation, AES encryption, HMAC, hashing, and QR generation run 100% inside your browser tab without sending data to servers.'
-        },
-        {
-            question: 'Can I use IARTY Developer Tools offline?',
-            answer: 'Yes. Once loaded, all offline service workers and client-side web workers continue to operate with zero network dependency.'
-        },
-        {
-            question: 'What features are supported in the JSON Formatter?',
-            answer: 'It supports beautifying, minifying, 2/4/tab indentation, key sorting (A-Z/Z-A), escaping, unescaping, and converting to YAML, XML, CSV, and TypeScript interfaces.'
-        }
-    ];
-
     return (
-        <div className="min-h-screen pt-20 sm:pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="min-h-screen pt-24 sm:pt-28 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
             <HelmetContainer
                 title="Developer & Online Utilities — IARTY Tools"
                 description="Privacy-first, 100% client-side online developer tools: JSON formatter & validator, Base64, UUID v1-v7, QR generator, Password generator, Math & number base converters, Web & SEO helpers, AES encryption, and CSS generators."
                 path="/developer"
-                faq={faqItems}
             />
 
-            {/* Header Hero with Glassmorphism */}
-            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-purple-50/80 via-white to-transparent dark:from-purple-950/20 dark:via-gray-950 dark:to-transparent border border-black/5 dark:border-white/10 p-6 sm:p-10 mb-8 text-center">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-purple-100/80 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300 mb-3 shadow-xs">
-                    <FiCompass className="w-3.5 h-3.5" />
+            {/* Background Ambience consistent with Instagram/TikTok pages */}
+            <div className="pointer-events-none fixed inset-0 overflow-hidden opacity-30 dark:opacity-15">
+                <div className="absolute right-[-10%] top-[-10%] h-96 w-96 rounded-full bg-blue-500/20 blur-[120px]" />
+                <div className="absolute bottom-[-10%] left-[-10%] h-96 w-96 rounded-full bg-blue-600/10 blur-[120px]" />
+            </div>
+
+            {/* Header Hero */}
+            <div className="mb-10 text-center max-w-3xl mx-auto">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-[var(--blue)] dark:bg-blue-950/40 dark:text-blue-400 mb-4 border border-blue-200/50 dark:border-blue-900/30">
                     <span>100% Client-Side · Pure Privacy · Offline Ready</span>
                 </div>
-                <h1 className="text-3xl sm:text-5xl font-black text-gray-900 dark:text-white tracking-tight">
+                <h1 className="text-3xl sm:text-5xl font-black text-[var(--fg)] tracking-tight">
                     Developer & Online Utilities
                 </h1>
-                <p className="mt-3 text-sm sm:text-base text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                <p className="mt-3 text-sm sm:text-base text-[var(--mut)] max-w-2xl mx-auto">
                     Instant client-side developer toolkit with 70+ utilities. No server requests, no tracking, complete privacy.
                 </p>
 
                 {/* Instant Search Bar */}
                 <div className="mt-6 max-w-md mx-auto relative">
-                    <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                    <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--mut)]" />
                     <input
                         type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         placeholder="Search tool (e.g. JSON, UUID, Base64, AES, QR)..."
-                        className="w-full pl-10 pr-9 py-2.5 bg-white dark:bg-gray-900 border border-black/10 dark:border-white/10 rounded-2xl text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-purple-500 shadow-sm text-gray-900 dark:text-white"
+                        className="w-full pl-10 pr-9 py-2.5 bg-[var(--card)] border border-[var(--line)] rounded-xl text-xs sm:text-sm font-medium focus:outline-none focus:border-[var(--blue)] focus:ring-1 focus:ring-[var(--blue)] shadow-xs text-[var(--fg)]"
                     />
                     {searchQuery && (
                         <button
                             onClick={() => setSearchQuery('')}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--mut)] hover:text-[var(--fg)]"
                         >
                             <FiX className="w-4 h-4" />
                         </button>
@@ -242,16 +245,16 @@ export default function DevToolsPage() {
                 </div>
             </div>
 
-            {/* Category Filter Pills */}
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-3 mb-4 no-scrollbar">
+            {/* Category Filter Tabs */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-6 no-scrollbar">
                 {CATEGORIES.map(cat => (
                     <button
                         key={cat.id}
                         onClick={() => setSelectedCategory(cat.id)}
-                        className={`px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all ${
+                        className={`px-4 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-all border ${
                             selectedCategory === cat.id
-                                ? 'bg-gray-900 text-white dark:bg-white dark:text-gray-900 shadow-sm'
-                                : 'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10'
+                                ? 'bg-[var(--blue)] text-white border-[var(--blue)] shadow-xs'
+                                : 'bg-[var(--card)] border-[var(--line)] text-[var(--mut)] hover:text-[var(--fg)] hover:border-[var(--blue)]'
                         }`}
                     >
                         {cat.label}
@@ -259,59 +262,82 @@ export default function DevToolsPage() {
                 ))}
             </div>
 
-            {/* Tools Quick Grid Carousel / Selector */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2.5 mb-8">
+            {/* Interactive Grid: 4 columns with proper gap-4 */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-8">
                 {filteredTools.map((item) => {
                     const Icon = item.icon;
                     const isActive = activeTab === item.id;
                     return (
-                        <button
+                        <div
                             key={item.id}
-                            onClick={() => setActiveTab(item.id)}
-                            className={`p-3 rounded-2xl text-left transition-all relative border flex flex-col justify-between ${
+                            className={`p-4 rounded-xl transition-all relative border flex flex-col justify-between ${
                                 isActive
-                                    ? 'bg-purple-600 text-white border-purple-500 shadow-lg shadow-purple-500/20 scale-[1.02]'
-                                    : 'bg-white dark:bg-gray-900 border-black/5 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:border-purple-300 dark:hover:border-purple-800'
+                                    ? 'bg-[var(--card)] border-[var(--blue)] ring-2 ring-[var(--blue)]/20 shadow-sm'
+                                    : 'bg-[var(--card)] border-[var(--line)] hover:border-[var(--blue)]/50 shadow-xs'
                             }`}
                         >
-                            <div className="flex items-center justify-between mb-2">
-                                <div className={`p-2 rounded-xl ${isActive ? 'bg-white/20 text-white' : 'bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400'}`}>
-                                    <Icon className="w-4 h-4" />
-                                </div>
-                                {item.badge && (
-                                    <span className={`text-[9px] font-black uppercase px-1.5 py-0.5 rounded-md ${isActive ? 'bg-white/20 text-white' : 'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300'}`}>
-                                        {item.badge}
-                                    </span>
-                                )}
-                            </div>
                             <div>
-                                <h3 className={`text-xs font-bold truncate ${isActive ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
-                                    {item.name}
-                                </h3>
-                                <p className={`text-[10px] mt-0.5 line-clamp-1 ${isActive ? 'text-purple-100' : 'text-gray-400'}`}>
+                                <div className="flex items-center justify-between mb-3">
+                                    <div className={`p-2.5 rounded-lg ${isActive ? 'bg-blue-600 text-white' : 'bg-[var(--soft)] text-[var(--blue)]'}`}>
+                                        <Icon className="w-4 h-4" />
+                                    </div>
+                                    <div className="flex items-center gap-1.5">
+                                        {item.badge && (
+                                            <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded-md bg-blue-50 text-[var(--blue)] dark:bg-blue-950/40 dark:text-blue-300 border border-blue-200/50 dark:border-blue-900/30">
+                                                {item.badge}
+                                            </span>
+                                        )}
+                                        {item.path !== '/developer' && (
+                                            <Link
+                                                to={item.path}
+                                                title={`Open dedicated ${item.name} page for SEO`}
+                                                className="p-1 text-[var(--mut)] hover:text-[var(--blue)] rounded transition-colors"
+                                            >
+                                                <FiExternalLink className="w-3.5 h-3.5" />
+                                            </Link>
+                                        )}
+                                    </div>
+                                </div>
+                                <h3 className="text-sm font-bold text-[var(--fg)]">{item.name}</h3>
+                                <p className="text-xs mt-1 text-[var(--mut)] leading-relaxed line-clamp-2">
                                     {item.description}
                                 </p>
                             </div>
-                        </button>
+
+                            <button
+                                onClick={() => setActiveTab(item.id)}
+                                className={`mt-4 w-full py-1.5 px-3 rounded-lg text-xs font-semibold transition-colors ${
+                                    isActive
+                                        ? 'bg-[var(--blue)] text-white'
+                                        : 'bg-[var(--soft)] text-[var(--fg)] hover:bg-[var(--line)]'
+                                }`}
+                            >
+                                {isActive ? 'Active Workspace' : 'Open Tool'}
+                            </button>
+                        </div>
                     );
                 })}
             </div>
 
-            {filteredTools.length === 0 && (
-                <div className="p-8 text-center text-sm text-gray-400 bg-gray-50 dark:bg-black/20 rounded-2xl border border-black/5 dark:border-white/5 mb-8">
-                    No tools match "{searchQuery}". Try searching for JSON, Base64, Hash, or QR.
+            {/* Active Workspace View */}
+            <div className="mb-4 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold text-[var(--mut)] uppercase tracking-wider">Active Workspace:</span>
+                    <span className="text-xs font-bold px-2.5 py-1 rounded-md bg-blue-50 text-[var(--blue)] dark:bg-blue-950/40 dark:text-blue-300 border border-blue-200/40 dark:border-blue-900/30">
+                        {activeToolInfo.name}
+                    </span>
                 </div>
-            )}
-
-            {/* Active Tool Header Banner */}
-            <div className="flex items-center gap-2 mb-4">
-                <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Active Workspace:</span>
-                <span className="text-xs font-bold px-2.5 py-0.5 rounded-lg bg-purple-100 text-purple-800 dark:bg-purple-950/50 dark:text-purple-300">
-                    {activeToolInfo.name}
-                </span>
+                {activeToolInfo.path !== '/developer' && (
+                    <Link
+                        to={activeToolInfo.path}
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--blue)] hover:underline"
+                    >
+                        <span>Open Full SEO Page</span>
+                        <FiExternalLink className="w-3 h-3" />
+                    </Link>
+                )}
             </div>
 
-            {/* Tool Render Area */}
             <div className="transition-all duration-300">
                 {activeTab === 'json-formatter' && <JsonFormatterTool />}
                 {activeTab === 'json-validator' && <JsonValidatorTool />}
@@ -326,22 +352,6 @@ export default function DevToolsPage() {
                 {activeTab === 'security' && <SecuritySuiteTool />}
                 {activeTab === 'css' && <CssEverydaySuiteTool />}
                 {activeTab === 'dev' && <DevUtilitiesSuiteTool />}
-            </div>
-
-            {/* AEO / FAQ Structured Section */}
-            <div className="mt-16 pt-8 border-t border-black/5 dark:border-white/10">
-                <div className="flex items-center gap-2 mb-4">
-                    <FiStar className="text-purple-500 w-4 h-4" />
-                    <h2 className="text-lg font-bold text-gray-900 dark:text-white">Frequently Asked Questions</h2>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {faqItems.map((item, idx) => (
-                        <div key={idx} className="p-5 bg-white dark:bg-gray-900/60 rounded-2xl border border-black/5 dark:border-white/10 shadow-xs">
-                            <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-2">{item.question}</h3>
-                            <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">{item.answer}</p>
-                        </div>
-                    ))}
-                </div>
             </div>
         </div>
     );

@@ -85,27 +85,27 @@ export const PasswordGeneratorTool: React.FC = () => {
             }}
         >
             {/* Mode selection */}
-            <div className="flex items-center gap-2 mb-6 pb-4 border-b border-black/5 dark:border-white/10">
+            <div className="flex items-center gap-2 mb-6 pb-4 border-b border-[var(--line)]">
                 <button
                     onClick={() => setMode('password')}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                        mode === 'password' ? 'bg-purple-600 text-white shadow-sm' : 'bg-gray-100 dark:bg-white/10 text-gray-700 dark:text-gray-300'
+                    className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
+                        mode === 'password' ? 'bg-[var(--blue)] text-white shadow-xs' : 'bg-[var(--soft)] text-[var(--mut)] hover:text-[var(--fg)] border border-[var(--line)]'
                     }`}
                 >
                     Random Password
                 </button>
                 <button
                     onClick={() => setMode('passphrase')}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                        mode === 'passphrase' ? 'bg-purple-600 text-white shadow-sm' : 'bg-gray-100 dark:bg-white/10 text-gray-700 dark:text-gray-300'
+                    className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
+                        mode === 'passphrase' ? 'bg-[var(--blue)] text-white shadow-xs' : 'bg-[var(--soft)] text-[var(--mut)] hover:text-[var(--fg)] border border-[var(--line)]'
                     }`}
                 >
                     Memorable Passphrase
                 </button>
                 <button
                     onClick={() => setMode('pin')}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                        mode === 'pin' ? 'bg-purple-600 text-white shadow-sm' : 'bg-gray-100 dark:bg-white/10 text-gray-700 dark:text-gray-300'
+                    className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
+                        mode === 'pin' ? 'bg-[var(--blue)] text-white shadow-xs' : 'bg-[var(--soft)] text-[var(--mut)] hover:text-[var(--fg)] border border-[var(--line)]'
                     }`}
                 >
                     Numeric PIN
@@ -113,7 +113,7 @@ export const PasswordGeneratorTool: React.FC = () => {
 
                 <button
                     onClick={generateCurrent}
-                    className="ml-auto p-2 text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-950/40 rounded-xl"
+                    className="ml-auto p-2 text-[var(--blue)] hover:bg-[var(--soft)] rounded-lg transition-colors"
                     title="Regenerate"
                 >
                     <FiRefreshCw className="w-4 h-4" />
@@ -121,32 +121,32 @@ export const PasswordGeneratorTool: React.FC = () => {
             </div>
 
             {/* Main Generated Display */}
-            <div className="p-4 bg-gray-50 dark:bg-black/30 border border-black/5 dark:border-white/10 rounded-2xl mb-4">
+            <div className="p-4 bg-[var(--soft)] border border-[var(--line)] rounded-xl mb-4">
                 <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Generated Output</span>
+                    <span className="text-xs font-bold text-[var(--mut)] uppercase tracking-wider">Generated Output</span>
                     <div className="flex items-center gap-2">
                         <button
                             onClick={() => setShowPassword(!showPassword)}
-                            className="p-1.5 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                            className="p-1.5 text-[var(--mut)] hover:text-[var(--fg)]"
                         >
                             {showPassword ? <FiEyeOff /> : <FiEye />}
                         </button>
                         <CopyButton text={primaryPassword} />
                     </div>
                 </div>
-                <div className="font-mono text-base sm:text-lg font-bold break-all text-purple-600 dark:text-purple-400 select-all">
+                <div className="font-mono text-base sm:text-lg font-bold break-all text-[var(--blue)] select-all">
                     {showPassword ? primaryPassword : '•'.repeat(primaryPassword.length)}
                 </div>
 
                 {/* Strength Meter */}
-                <div className="mt-4 pt-3 border-t border-black/5 dark:border-white/10">
+                <div className="mt-4 pt-3 border-t border-[var(--line)]">
                     <div className="flex items-center justify-between text-xs mb-1.5">
-                        <span className="font-bold text-gray-600 dark:text-gray-300">
+                        <span className="font-bold text-[var(--fg)]">
                             Strength: <span className="font-bold">{strength.label}</span> ({strength.entropy} bits entropy)
                         </span>
-                        <span className="text-gray-500">Crack Time: ~{strength.crackTime}</span>
+                        <span className="text-[var(--mut)]">Crack Time: ~{strength.crackTime}</span>
                     </div>
-                    <div className="w-full h-2 bg-gray-200 dark:bg-white/10 rounded-full overflow-hidden">
+                    <div className="w-full h-2 bg-[var(--line)] rounded-full overflow-hidden">
                         <div
                             className={`h-full ${getStrengthColor()} transition-all duration-300`}
                             style={{ width: `${Math.min(100, (strength.entropy / 100) * 100)}%` }}
@@ -169,7 +169,7 @@ export const PasswordGeneratorTool: React.FC = () => {
                             max={128}
                             value={config.length}
                             onChange={(e) => setConfig({ ...config, length: parseInt(e.target.value) })}
-                            className="w-full accent-purple-600"
+                            className="w-full accent-blue-600"
                         />
                     </div>
 

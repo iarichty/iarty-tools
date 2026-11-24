@@ -161,8 +161,8 @@ export default function Navbar() {
                                     to={item.href}
                                     aria-current={isActive ? 'page' : undefined}
                                     className={`relative flex items-center space-x-2 px-4 py-2 text-sm font-semibold rounded-full transition-colors duration-300 ${isActive
-                                        ? 'text-purple-600 dark:text-white'
-                                        : 'text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-white'
+                                        ? 'text-[var(--blue)] font-bold'
+                                        : 'text-[var(--mut)] hover:text-[var(--fg)]'
                                         }`}
                                 >
                                     {isActive && (

@@ -108,37 +108,37 @@ export const JsonFormatterTool: React.FC = () => {
             }}
         >
             {/* Top Toolbar */}
-            <div className="flex flex-wrap items-center gap-2 mb-4 pb-4 border-b border-black/5 dark:border-white/10">
+            <div className="flex flex-wrap items-center gap-2 mb-4 pb-4 border-b border-[var(--line)]">
                 <button
                     onClick={handleFormat}
-                    className="px-3.5 py-1.5 bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold rounded-xl shadow-sm transition-all"
+                    className="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg shadow-xs transition-all"
                 >
                     Beautify
                 </button>
                 <button
                     onClick={handleMinify}
-                    className="px-3 py-1.5 bg-gray-100 dark:bg-white/10 hover:bg-gray-200 dark:hover:bg-white/15 text-gray-700 dark:text-gray-200 text-xs font-semibold rounded-xl transition-all"
+                    className="px-3 py-1.5 bg-[var(--soft)] hover:bg-[var(--line)] text-[var(--fg)] text-xs font-semibold rounded-lg border border-[var(--line)] transition-all"
                 >
                     Minify
                 </button>
 
-                <div className="flex items-center gap-1 bg-gray-100 dark:bg-white/10 px-2 py-1 rounded-xl text-xs">
-                    <span className="text-gray-500 dark:text-gray-400 font-medium">Indent:</span>
+                <div className="flex items-center gap-1 bg-[var(--soft)] px-2 py-1 rounded-lg border border-[var(--line)] text-xs">
+                    <span className="text-[var(--mut)] font-medium">Indent:</span>
                     <button
                         onClick={() => setIndent(2)}
-                        className={`px-2 py-0.5 rounded-lg ${indent === 2 ? 'bg-white dark:bg-gray-800 font-bold shadow-xs' : ''}`}
+                        className={`px-2 py-0.5 rounded ${indent === 2 ? 'bg-[var(--card)] text-[var(--blue)] font-bold shadow-xs' : 'text-[var(--mut)]'}`}
                     >
                         2
                     </button>
                     <button
                         onClick={() => setIndent(4)}
-                        className={`px-2 py-0.5 rounded-lg ${indent === 4 ? 'bg-white dark:bg-gray-800 font-bold shadow-xs' : ''}`}
+                        className={`px-2 py-0.5 rounded ${indent === 4 ? 'bg-[var(--card)] text-[var(--blue)] font-bold shadow-xs' : 'text-[var(--mut)]'}`}
                     >
                         4
                     </button>
                     <button
                         onClick={() => setIndent('\t')}
-                        className={`px-2 py-0.5 rounded-lg ${indent === '\t' ? 'bg-white dark:bg-gray-800 font-bold shadow-xs' : ''}`}
+                        className={`px-2 py-0.5 rounded ${indent === '\t' ? 'bg-[var(--card)] text-[var(--blue)] font-bold shadow-xs' : 'text-[var(--mut)]'}`}
                     >
                         Tab
                     </button>
@@ -147,13 +147,13 @@ export const JsonFormatterTool: React.FC = () => {
                 <div className="flex items-center gap-1">
                     <button
                         onClick={() => handleSort('asc')}
-                        className="px-2.5 py-1.5 bg-gray-100 dark:bg-white/10 hover:bg-gray-200 dark:hover:bg-white/15 text-xs font-medium rounded-xl text-gray-700 dark:text-gray-300"
+                        className="px-2.5 py-1.5 bg-[var(--soft)] hover:bg-[var(--line)] border border-[var(--line)] text-xs font-medium rounded-lg text-[var(--fg)]"
                     >
                         Sort A-Z
                     </button>
                     <button
                         onClick={() => handleSort('desc')}
-                        className="px-2.5 py-1.5 bg-gray-100 dark:bg-white/10 hover:bg-gray-200 dark:hover:bg-white/15 text-xs font-medium rounded-xl text-gray-700 dark:text-gray-300"
+                        className="px-2.5 py-1.5 bg-[var(--soft)] hover:bg-[var(--line)] border border-[var(--line)] text-xs font-medium rounded-lg text-[var(--fg)]"
                     >
                         Sort Z-A
                     </button>
@@ -162,13 +162,13 @@ export const JsonFormatterTool: React.FC = () => {
                 <div className="flex items-center gap-1">
                     <button
                         onClick={handleEscape}
-                        className="px-2.5 py-1.5 bg-gray-100 dark:bg-white/10 hover:bg-gray-200 text-xs font-medium rounded-xl text-gray-700 dark:text-gray-300"
+                        className="px-2.5 py-1.5 bg-[var(--soft)] hover:bg-[var(--line)] border border-[var(--line)] text-xs font-medium rounded-lg text-[var(--fg)]"
                     >
                         Escape
                     </button>
                     <button
                         onClick={handleUnescape}
-                        className="px-2.5 py-1.5 bg-gray-100 dark:bg-white/10 hover:bg-gray-200 text-xs font-medium rounded-xl text-gray-700 dark:text-gray-300"
+                        className="px-2.5 py-1.5 bg-[var(--soft)] hover:bg-[var(--line)] border border-[var(--line)] text-xs font-medium rounded-lg text-[var(--fg)]"
                     >
                         Unescape
                     </button>
@@ -176,28 +176,28 @@ export const JsonFormatterTool: React.FC = () => {
 
                 {/* Conversion drop-ins */}
                 <div className="flex items-center gap-1 ml-auto">
-                    <span className="text-xs text-gray-400 dark:text-gray-500 mr-1">To:</span>
+                    <span className="text-xs text-[var(--mut)] mr-1">To:</span>
                     <button
                         onClick={() => handleConvert('yaml')}
-                        className="px-2 py-1 bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 hover:bg-blue-100 text-xs font-medium rounded-lg"
+                        className="px-2 py-1 bg-blue-50 dark:bg-blue-950/40 text-[var(--blue)] hover:bg-blue-100 text-xs font-medium rounded-md border border-blue-200/40"
                     >
                         YAML
                     </button>
                     <button
                         onClick={() => handleConvert('xml')}
-                        className="px-2 py-1 bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 hover:bg-amber-100 text-xs font-medium rounded-lg"
+                        className="px-2 py-1 bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 hover:bg-amber-100 text-xs font-medium rounded-md border border-amber-200/40"
                     >
                         XML
                     </button>
                     <button
                         onClick={() => handleConvert('csv')}
-                        className="px-2 py-1 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100 text-xs font-medium rounded-lg"
+                        className="px-2 py-1 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100 text-xs font-medium rounded-md border border-emerald-200/40"
                     >
                         CSV
                     </button>
                     <button
                         onClick={() => handleConvert('ts')}
-                        className="px-2 py-1 bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 hover:bg-purple-100 text-xs font-medium rounded-lg"
+                        className="px-2 py-1 bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 hover:bg-blue-100 text-xs font-medium rounded-md border border-blue-200/40"
                     >
                         TypeScript
                     </button>
@@ -216,9 +216,9 @@ export const JsonFormatterTool: React.FC = () => {
                 {/* Input */}
                 <div className="flex flex-col">
                     <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Input JSON</span>
+                        <span className="text-xs font-bold text-[var(--mut)] uppercase tracking-wider">Input JSON</span>
                         <div className="flex items-center gap-2">
-                            <label htmlFor={fileInputId} className="cursor-pointer text-xs flex items-center gap-1 text-purple-600 dark:text-purple-400 hover:underline">
+                            <label htmlFor={fileInputId} className="cursor-pointer text-xs flex items-center gap-1 text-[var(--blue)] hover:underline">
                                 <FiUpload className="w-3.5 h-3.5" />
                                 <span>Upload</span>
                                 <input
@@ -236,14 +236,14 @@ export const JsonFormatterTool: React.FC = () => {
                         onChange={(e) => setInput(e.target.value)}
                         placeholder="Paste JSON here..."
                         rows={14}
-                        className="w-full p-3 font-mono text-xs bg-gray-50 dark:bg-black/30 border border-black/5 dark:border-white/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-800 dark:text-gray-200 resize-y"
+                        className="w-full p-3 font-mono text-xs bg-[var(--soft)] border border-[var(--line)] rounded-xl focus:outline-none focus:border-[var(--blue)] focus:ring-1 focus:ring-[var(--blue)] text-[var(--fg)] resize-y"
                     />
                 </div>
 
                 {/* Output */}
                 <div className="flex flex-col">
                     <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Result</span>
+                        <span className="text-xs font-bold text-[var(--mut)] uppercase tracking-wider">Result</span>
                         {output && (
                             <div className="flex items-center gap-2">
                                 <CopyButton text={output} />
@@ -256,7 +256,7 @@ export const JsonFormatterTool: React.FC = () => {
                         readOnly
                         placeholder="Formatted or converted output will appear here..."
                         rows={14}
-                        className="w-full p-3 font-mono text-xs bg-gray-50 dark:bg-black/30 border border-black/5 dark:border-white/10 rounded-2xl text-gray-800 dark:text-gray-200 resize-y"
+                        className="w-full p-3 font-mono text-xs bg-[var(--soft)] border border-[var(--line)] rounded-xl text-[var(--fg)] resize-y"
                     />
                 </div>
             </div>
