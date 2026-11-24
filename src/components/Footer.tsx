@@ -1,4 +1,4 @@
-import { FiHeart, FiGithub, FiExternalLink, FiShield, FiInfo } from 'react-icons/fi';
+import { FiHeart, FiGithub, FiShield, FiInfo } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 export default function Footer() {
@@ -33,12 +33,12 @@ export default function Footer() {
 
                     {/* Links */}
                     <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                        <FooterLink to="/developer" icon={<FiInfo />} label="Developer Tools" />
                         <FooterLink to="/instagram/how-analyze-works" icon={<FiInfo />} label="Panduan Instagram" />
                         <FooterLink to="/tiktok/how-analyze-works" icon={<FiShield />} label="Panduan TikTok" />
                         <FooterLink to="/threads/how-analyze-works" icon={<FiInfo />} label="Panduan Threads" />
                         <FooterLink to="/x/how-analyze-works" icon={<FiShield />} label="Panduan X" />
                         <FooterLink href="https://github.com/iarichty/iarty-tools" icon={<FiGithub />} label="GitHub Repo" isExternal />
-                        <FooterLink href="https://fiqtor.pages.dev" icon={<FiExternalLink />} label="Developer" isExternal />
                     </div>
                 </div>
 

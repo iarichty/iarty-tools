@@ -29,6 +29,7 @@ type Dict = Record<string, string>;
 
 const en: Dict = {
     'nav.home': 'Home',
+    'nav.developer': 'Dev Tools',
     'nav.instagram': 'Instagram',
     'nav.tiktok': 'TikTok',
     'nav.threads': 'Threads',
@@ -151,6 +152,7 @@ const en: Dict = {
 
 const id: Dict = {
     'nav.home': 'Beranda',
+    'nav.developer': 'Dev Tools',
     'nav.instagram': 'Instagram',
     'nav.tiktok': 'TikTok',
     'nav.threads': 'Threads',
@@ -275,6 +277,7 @@ const id: Dict = {
 
 const zh: Dict = {
     'nav.home': '首页',
+    'nav.developer': '开发者工具',
     'nav.instagram': 'Instagram',
     'nav.tiktok': 'TikTok',
     'nav.threads': 'Threads',

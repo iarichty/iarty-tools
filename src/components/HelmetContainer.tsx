@@ -6,52 +6,78 @@ interface HelmetContainerProps {
     children?: ReactNode;
     /** Page-specific title. Falls back to the site-wide default. */
     title?: string;
-    /** Route-relative path (e.g. "/instagram"). Used for the canonical URL. */
+    /** Page-specific description for SEO & AEO answer summaries. */
+    description?: string;
+    /** Route-relative path (e.g. "/developer"). Used for the canonical URL. */
     path?: string;
+    /** Optional FAQ schema items for AEO rich snippets. */
+    faq?: Array<{ question: string; answer: string }>;
 }
 
 /**
  * Centralises SEO tags. Rendered per page so the title, canonical URL and
  * Open Graph data reflect the current route.
  */
-export default function HelmetContainer({ children, title, path }: HelmetContainerProps) {
+export default function HelmetContainer({ children, title, description, path, faq }: HelmetContainerProps) {
     const { openGraph, twitter, robots, icons, authors, metadataBase, alternates } =
         MetadataConfig;
     const seoTitle = title ?? MetadataConfig.title;
+    const seoDesc = description ?? MetadataConfig.description;
     const ogImage = openGraph.images[0];
     const canonical = path ? `${metadataBase}${path}` : metadataBase;
 
-    // Structured data helps search engines understand the site and its pages.
+    // Structured data (SEO + AEO + GEO / Knowledge Graph)
+    const graphItems: any[] = [
+        {
+            '@type': 'WebSite',
+            '@id': `${metadataBase}/#website`,
+            url: metadataBase,
+            name: 'IARTY Tools',
+            description: MetadataConfig.description,
+            inLanguage: ['en', 'id', 'zh'],
+        },
+        {
+            '@type': 'SoftwareApplication',
+            name: seoTitle,
+            url: canonical,
+            applicationCategory: 'UtilitiesApplication',
+            operatingSystem: 'Any',
+            description: seoDesc,
+            offers: {
+                '@type': 'Offer',
+                price: '0',
+                priceCurrency: 'USD',
+            },
+            publisher: {
+                '@type': 'Organization',
+                name: 'PT IARTY TEKNOLOGI DIGITAL',
+                url: metadataBase,
+                address: {
+                    '@type': 'PostalAddress',
+                    addressCountry: 'ID',
+                    addressRegion: 'Indonesia',
+                },
+            },
+        },
+    ];
+
+    if (faq && faq.length > 0) {
+        graphItems.push({
+            '@type': 'FAQPage',
+            mainEntity: faq.map(f => ({
+                '@type': 'Question',
+                name: f.question,
+                acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: f.answer,
+                },
+            })),
+        });
+    }
+
     const jsonLd = {
         '@context': 'https://schema.org',
-        '@graph': [
-            {
-                '@type': 'WebSite',
-                '@id': `${metadataBase}/#website`,
-                url: metadataBase,
-                name: 'IARTY Tools',
-                description: MetadataConfig.description,
-                inLanguage: 'en',
-            },
-            {
-                '@type': 'SoftwareApplication',
-                name: 'IARTY Tools',
-                url: canonical,
-                applicationCategory: 'UtilitiesApplication',
-                operatingSystem: 'Any',
-                description: openGraph.description,
-                offers: {
-                    '@type': 'Offer',
-                    price: '0',
-                    priceCurrency: 'IDR',
-                },
-                publisher: {
-                    '@type': 'Organization',
-                    name: 'PT IARTY TEKNOLOGI DIGITAL',
-                    url: metadataBase,
-                },
-            },
-        ],
+        '@graph': graphItems,
     };
 
     return (
@@ -59,13 +85,13 @@ export default function HelmetContainer({ children, title, path }: HelmetContain
             <title>{seoTitle}</title>
             {children}
 
-            <meta name="description" content={MetadataConfig.description} />
+            <meta name="description" content={seoDesc} />
             <meta name="keywords" content={MetadataConfig.keywords.join(', ')} />
             <meta name="author" content={authors.name} />
             <link rel="canonical" href={canonical} />
             {alternates.languages &&
                 Object.entries(alternates.languages).map(([lang, href]) => (
-                    <link key={lang} rel="alternate" hrefLang={lang} href={href} />
+                    <link key={lang} rel="alternate" hrefLang={lang} href={path ? `${href}${path}` : href} />
                 ))}
             <meta name="theme-color" content="#0a0a0c" />
             <meta
@@ -75,10 +101,14 @@ export default function HelmetContainer({ children, title, path }: HelmetContain
                 }`}
             />
 
+            {/* GEO & Regional Meta */}
+            <meta name="geo.region" content="ID" />
+            <meta name="geo.placename" content="Indonesia" />
+
             {/* Open Graph */}
             <meta property="og:type" content={openGraph.type} />
             <meta property="og:title" content={seoTitle} />
-            <meta property="og:description" content={openGraph.description} />
+            <meta property="og:description" content={seoDesc} />
             <meta property="og:url" content={canonical} />
             <meta property="og:site_name" content={openGraph.siteName} />
             <meta property="og:locale" content={openGraph.locale} />
@@ -97,7 +127,7 @@ export default function HelmetContainer({ children, title, path }: HelmetContain
             {twitter.site && <meta name="twitter:site" content={twitter.site} />}
             {twitter.creator && <meta name="twitter:creator" content={twitter.creator} />}
             <meta name="twitter:title" content={seoTitle} />
-            <meta name="twitter:description" content={twitter.description} />
+            <meta name="twitter:description" content={seoDesc} />
             {twitter.images[0] && (
                 <>
                     <meta name="twitter:image" content={twitter.images[0]} />
