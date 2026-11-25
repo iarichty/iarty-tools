@@ -87,7 +87,7 @@ export async function decryptAesGcm(base64Payload: string, secretPassword: strin
 export function maskSensitiveText(text: string, type: 'email' | 'phone' | 'creditCard' | 'all'): string {
     let result = text;
     if (type === 'email' || type === 'all') {
-        result = result.replace(/([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})/g, (_match, user, domain, tld) => {
+        result = result.replace(/([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+).([a-zA-Z]{2,5})/g, (_match, user, domain, tld) => {
             const maskedUser = user.length > 2 ? `${user[0]}***${user[user.length - 1]}` : '***';
             return `${maskedUser}@${domain}.${tld}`;
         });

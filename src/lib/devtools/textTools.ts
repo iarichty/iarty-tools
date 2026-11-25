@@ -43,7 +43,7 @@ export function convertCase(
 
     const words = text
         .replace(/([a-z])([A-Z])/g, '$1 $2')
-        .replace(/[_\-]+/g, ' ')
+        .replace(/[_-]+/g, ' ')
         .trim()
         .split(/\s+/);
 

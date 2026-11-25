@@ -26,44 +26,41 @@ export const QrCodeTool: React.FC = () => {
     const [dataUrl, setDataUrl] = useState<string>('');
     const [svgString, setSvgString] = useState<string>('');
 
-    const getPayload = (): string => {
-        if (qrType === 'wifi') {
-            return buildWifiQrText(ssid, wifiPass, wifiEnc);
-        }
-        if (qrType === 'vcard') {
-            return buildVCardQrText({ name: vcardName, phone: vcardPhone, email: vcardEmail });
-        }
-        return textInput;
-    };
-
-    const updateQr = async () => {
-        const payload = getPayload();
-        if (!payload) return;
-        try {
-            const url = await generateQrDataUrl({
-                text: payload,
-                width: size,
-                colorDark,
-                colorLight,
-                errorCorrectionLevel: errorCorrection
-            });
-            setDataUrl(url);
-
-            const svg = await generateQrSvg({
-                text: payload,
-                width: size,
-                colorDark,
-                colorLight,
-                errorCorrectionLevel: errorCorrection
-            });
-            setSvgString(svg);
-        } catch (e) {
-            console.error(e);
-        }
-    };
-
     useEffect(() => {
-        updateQr();
+        let cancelled = false;
+        const payload =
+            qrType === 'wifi'
+                ? buildWifiQrText(ssid, wifiPass, wifiEnc)
+                : qrType === 'vcard'
+                  ? buildVCardQrText({ name: vcardName, phone: vcardPhone, email: vcardEmail })
+                  : textInput;
+        if (!payload) return;
+        Promise.all([
+            generateQrDataUrl({
+                text: payload,
+                width: size,
+                colorDark,
+                colorLight,
+                errorCorrectionLevel: errorCorrection,
+            }),
+            generateQrSvg({
+                text: payload,
+                width: size,
+                colorDark,
+                colorLight,
+                errorCorrectionLevel: errorCorrection,
+            }),
+        ])
+            .then(([url, svg]) => {
+                if (!cancelled) {
+                    setDataUrl(url);
+                    setSvgString(svg);
+                }
+            })
+            .catch((e) => console.error(e));
+        return () => {
+            cancelled = true;
+        };
     }, [qrType, textInput, ssid, wifiPass, wifiEnc, vcardName, vcardPhone, vcardEmail, size, colorDark, colorLight, errorCorrection]);
 
     return (
@@ -213,7 +210,7 @@ export const QrCodeTool: React.FC = () => {
                             <label className="block font-bold text-gray-500 mb-1">Error Correction</label>
                             <select
                                 value={errorCorrection}
-                                onChange={(e) => setErrorCorrection(e.target.value as any)}
+                                onChange={(e) => setErrorCorrection(e.target.value as 'L' | 'M' | 'Q' | 'H')}
                                 className="w-full p-2 bg-gray-50 dark:bg-black/30 border border-black/5 dark:border-white/10 rounded-xl font-bold"
                             >
                                 <option value="L">L (7%)</option>

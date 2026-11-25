@@ -22,7 +22,7 @@ export const TextSuiteTool: React.FC = () => {
 
     const stats = getTextStats(text);
 
-    const handleCaseConvert = (type: any) => {
+    const handleCaseConvert = (type: Parameters<typeof convertCase>[1]) => {
         setText(convertCase(text, type));
     };
 

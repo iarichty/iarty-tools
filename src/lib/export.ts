@@ -130,7 +130,7 @@ export function exportSummaryImage(
 
     ctx.fillStyle = '#64748b';
     ctx.font = '500 18px Inter, system-ui, sans-serif';
-    ctx.fillText('Processed 100% locally in the browser · iarty.id', 60, height - 40);
+    ctx.fillText('Processed 100% locally in the browser · tools.iarty.biz.id', 60, height - 40);
 
     canvas.toBlob((blob) => {
         if (blob) downloadBlob(blob, `${platform}-summary.png`);

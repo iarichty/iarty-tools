@@ -25,8 +25,8 @@ export const Base64Tool: React.FC = () => {
                     setImagePreview(`data:image/png;base64,${input}`);
                 }
                 setOutput(base64ToText(input));
-            } catch (e: any) {
-                setOutput(`Decoding Error: ${e.message}`);
+            } catch (e: unknown) {
+                setOutput(`Decoding Error: ${(e instanceof Error ? e.message : String(e))}`);
             }
         }
     };
@@ -51,8 +51,8 @@ export const Base64Tool: React.FC = () => {
             } else {
                 setInput(dataUri);
             }
-        } catch (err: any) {
-            setOutput(`Error reading file: ${err.message}`);
+        } catch (err: unknown) {
+            setOutput(`Error reading file: ${(err instanceof Error ? err.message : String(err))}`);
         }
     };
 

@@ -21,7 +21,7 @@ export function minifyJson(jsonStr: string): string {
     return JSON.stringify(parsed);
 }
 
-export function sortJsonKeys(obj: any, direction: 'asc' | 'desc' = 'asc'): any {
+export function sortJsonKeys(obj: unknown, direction: 'asc' | 'desc' = 'asc'): unknown {
     if (Array.isArray(obj)) {
         return obj.map(item => sortJsonKeys(item, direction));
     }
@@ -29,9 +29,10 @@ export function sortJsonKeys(obj: any, direction: 'asc' | 'desc' = 'asc'): any {
         const keys = Object.keys(obj).sort((a, b) => {
             return direction === 'asc' ? a.localeCompare(b) : b.localeCompare(a);
         });
-        const sorted: Record<string, any> = {};
+        const sorted: Record<string, unknown> = {};
+        const record = obj as Record<string, unknown>;
         for (const k of keys) {
-            sorted[k] = sortJsonKeys(obj[k], direction);
+            sorted[k] = sortJsonKeys(record[k], direction);
         }
         return sorted;
     }
@@ -55,7 +56,7 @@ export function unescapeJsonString(str: string): string {
     }
 }
 
-export function getJsonStats(rawJson: string, parsed?: any): JsonStats {
+export function getJsonStats(rawJson: string, parsed?: unknown): JsonStats {
     let data = parsed;
     if (data === undefined) {
         try {
@@ -79,7 +80,7 @@ export function getJsonStats(rawJson: string, parsed?: any): JsonStats {
     let keysCount = 0;
     let maxDepth = 0;
 
-    function traverse(node: any, currentDepth: number) {
+    function traverse(node: unknown, currentDepth: number) {
         if (currentDepth > maxDepth) maxDepth = currentDepth;
         if (Array.isArray(node)) {
             arrayCount++;
@@ -91,7 +92,7 @@ export function getJsonStats(rawJson: string, parsed?: any): JsonStats {
             const keys = Object.keys(node);
             keysCount += keys.length;
             for (const k of keys) {
-                traverse(node[k], currentDepth + 1);
+                traverse((node as Record<string, unknown>)[k], currentDepth + 1);
             }
         }
     }
@@ -110,12 +111,12 @@ export function getJsonStats(rawJson: string, parsed?: any): JsonStats {
     };
 }
 
-export function jsonToYaml(obj: any, indentLevel = 0): string {
+export function jsonToYaml(obj: unknown, indentLevel = 0): string {
     const pad = '  '.repeat(indentLevel);
     if (obj === null) return 'null\n';
     if (typeof obj === 'boolean' || typeof obj === 'number') return `${obj}\n`;
     if (typeof obj === 'string') {
-        if (obj.includes('\n') || /[:#\[\]{},&*?|<>=!%@`]/.test(obj)) {
+        if (obj.includes('\n') || /[:#[\]{},&*?|<>=!%@`]/.test(obj)) {
             return JSON.stringify(obj) + '\n';
         }
         return `${obj}\n`;
@@ -139,7 +140,7 @@ export function jsonToYaml(obj: any, indentLevel = 0): string {
         if (keys.length === 0) return '{}\n';
         let res = '';
         for (const key of keys) {
-            const val = obj[key];
+            const val = (obj as Record<string, unknown>)[key];
             if (typeof val === 'object' && val !== null) {
                 res += `${pad}${key}:\n${jsonToYaml(val, indentLevel + 1)}`;
             } else {
@@ -151,9 +152,9 @@ export function jsonToYaml(obj: any, indentLevel = 0): string {
     return String(obj) + '\n';
 }
 
-export function jsonToXml(obj: any, rootName = 'root'): string {
-    function toXml(val: any, name: string): string {
-        const safeName = name.replace(/[^a-zA-Z0-9_\-]/g, '_') || 'item';
+export function jsonToXml(obj: unknown, rootName = 'root'): string {
+    function toXml(val: unknown, name: string): string {
+        const safeName = name.replace(/[^a-zA-Z0-9_-]/g, '_') || 'item';
         if (val === null || val === undefined) {
             return `<${safeName}/>`;
         }
@@ -161,7 +162,7 @@ export function jsonToXml(obj: any, rootName = 'root'): string {
             return val.map(item => toXml(item, safeName)).join('');
         }
         if (typeof val === 'object') {
-            const inner = Object.keys(val).map(k => toXml(val[k], k)).join('');
+            const inner = Object.keys(val).map(k => toXml((val as Record<string, unknown>)[k], k)).join('');
             return `<${safeName}>${inner}</${safeName}>`;
         }
         const text = String(val)
@@ -176,8 +177,8 @@ export function jsonToXml(obj: any, rootName = 'root'): string {
     return `<?xml version="1.0" encoding="UTF-8"?>\n${toXml(obj, rootName)}`;
 }
 
-export function jsonToCsv(data: any): string {
-    let rows: any[] = [];
+export function jsonToCsv(data: unknown): string {
+    let rows: unknown[] = [];
     if (Array.isArray(data)) {
         rows = data;
     } else if (typeof data === 'object' && data !== null) {
@@ -196,7 +197,7 @@ export function jsonToCsv(data: any): string {
     });
 
     const headers = Array.from(headersSet);
-    const escapeCsv = (val: any): string => {
+    const escapeCsv = (val: unknown): string => {
         if (val === null || val === undefined) return '';
         const s = typeof val === 'object' ? JSON.stringify(val) : String(val);
         if (s.includes(',') || s.includes('"') || s.includes('\n')) {
@@ -208,16 +209,16 @@ export function jsonToCsv(data: any): string {
     const headerLine = headers.map(escapeCsv).join(',');
     const dataLines = rows.map(row => {
         if (!row || typeof row !== 'object') return escapeCsv(row);
-        return headers.map(h => escapeCsv(row[h])).join(',');
+        return headers.map(h => escapeCsv((row as Record<string, unknown>)[h])).join(',');
     });
 
     return [headerLine, ...dataLines].join('\n');
 }
 
-export function jsonToTypeScript(obj: any, rootName = 'RootObject'): string {
+export function jsonToTypeScript(obj: unknown, rootName = 'RootObject'): string {
     const interfaces: string[] = [];
 
-    function generate(data: any, name: string): string {
+    function generate(data: unknown, name: string): string {
         if (data === null || data === undefined) return 'any';
         if (Array.isArray(data)) {
             if (data.length === 0) return 'any[]';

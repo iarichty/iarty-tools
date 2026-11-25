@@ -12,8 +12,8 @@ export const DevUtilitiesSuiteTool: React.FC = () => {
     );
 
     // Timestamp state
-    const [timestamp, setTimestamp] = useState<number>(Math.floor(Date.now() / 1000));
-    const [dateStr, setDateStr] = useState<string>(new Date().toISOString());
+    const [timestamp, setTimestamp] = useState<number>(() => Math.floor(Date.now() / 1000));
+    const [dateStr, setDateStr] = useState<string>(() => new Date().toISOString());
 
     // Color state
     const [hexColor, setHexColor] = useState<string>('#9333ea');

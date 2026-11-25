@@ -4,8 +4,8 @@
 
 export interface DecodedJwt {
     valid: boolean;
-    header: any;
-    payload: any;
+    header: unknown;
+    payload: unknown;
     signature: string;
     isExpired?: boolean;
     expiresAt?: string;
@@ -176,7 +176,7 @@ export function formatHtml(html: string): string {
 
         formatted += tab.repeat(indent) + '<' + element + '>\n';
 
-        if (element.match(/^<?\w[^>]*[^\/]$/) && !element.startsWith('input') && !element.startsWith('img') && !element.startsWith('br') && !element.startsWith('hr')) {
+        if (element.match(/^<?\w[^>]*[^/]$/) && !element.startsWith('input') && !element.startsWith('img') && !element.startsWith('br') && !element.startsWith('hr')) {
             indent++;
         }
     });

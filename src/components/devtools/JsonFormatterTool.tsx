@@ -29,8 +29,8 @@ export const JsonFormatterTool: React.FC = () => {
         try {
             setError(null);
             setOutput(formatJson(input, indent));
-        } catch (e: any) {
-            setError(e.message);
+        } catch (e: unknown) {
+            setError((e instanceof Error ? e.message : String(e)));
         }
     };
 
@@ -38,8 +38,8 @@ export const JsonFormatterTool: React.FC = () => {
         try {
             setError(null);
             setOutput(minifyJson(input));
-        } catch (e: any) {
-            setError(e.message);
+        } catch (e: unknown) {
+            setError((e instanceof Error ? e.message : String(e)));
         }
     };
 
@@ -49,8 +49,8 @@ export const JsonFormatterTool: React.FC = () => {
             const parsed = JSON.parse(input);
             const sorted = sortJsonKeys(parsed, dir);
             setOutput(JSON.stringify(sorted, null, indent));
-        } catch (e: any) {
-            setError(e.message);
+        } catch (e: unknown) {
+            setError((e instanceof Error ? e.message : String(e)));
         }
     };
 
@@ -80,8 +80,8 @@ export const JsonFormatterTool: React.FC = () => {
                     setOutput(jsonToTypeScript(parsed));
                     break;
             }
-        } catch (e: any) {
-            setError(e.message);
+        } catch (e: unknown) {
+            setError((e instanceof Error ? e.message : String(e)));
         }
     };
 

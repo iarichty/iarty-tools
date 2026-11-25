@@ -257,7 +257,7 @@ export const MathSuiteTool: React.FC = () => {
                             <label className="block text-xs font-bold text-gray-500 mb-1">Category</label>
                             <select
                                 value={unitCat}
-                                onChange={(e) => setUnitCat(e.target.value as any)}
+                                onChange={(e) => setUnitCat(e.target.value as 'length' | 'weight' | 'data' | 'speed' | 'temperature')}
                                 className="w-full p-2 bg-gray-50 dark:bg-black/30 border border-black/5 dark:border-white/10 rounded-xl text-xs font-bold"
                             >
                                 <option value="length">Length</option>

@@ -19,7 +19,7 @@ export interface ValidationReport {
         totalErrors: number;
         totalWarnings: number;
     };
-    parsedData?: any;
+    parsedData?: unknown;
 }
 
 export function validateJsonSyntax(jsonStr: string): ValidationReport {
@@ -55,8 +55,8 @@ export function validateJsonSyntax(jsonStr: string): ValidationReport {
             stats: { totalErrors: 0, totalWarnings: warnings.length },
             parsedData: parsed
         };
-    } catch (err: any) {
-        const rawMessage = err?.message || 'Invalid JSON';
+    } catch (err: unknown) {
+        const rawMessage = err instanceof Error ? err.message : 'Invalid JSON';
         let line = 1;
         let column = 1;
 
@@ -111,12 +111,20 @@ export function validateJsonSyntax(jsonStr: string): ValidationReport {
     }
 }
 
-export function validateJsonSchema(data: any, schemaObj: any): ValidationReport {
+interface JsonSchemaNode {
+    type?: string | string[];
+    required?: string[];
+    properties?: Record<string, JsonSchemaNode>;
+    items?: JsonSchemaNode;
+}
+
+export function validateJsonSchema(data: unknown, schemaObj: unknown): ValidationReport {
     const errors: JsonErrorDetail[] = [];
     const warnings: JsonErrorDetail[] = [];
 
-    function checkNode(node: any, schema: any, path: string) {
-        if (!schema || typeof schema !== 'object') return;
+    function checkNode(node: unknown, schemaInput: unknown, path: string) {
+        if (!schemaInput || typeof schemaInput !== 'object') return;
+        const schema = schemaInput as JsonSchemaNode;
 
         if (schema.type) {
             const expectedTypes = Array.isArray(schema.type) ? schema.type : [schema.type];
@@ -150,7 +158,7 @@ export function validateJsonSchema(data: any, schemaObj: any): ValidationReport 
         if (schema.properties && typeof node === 'object' && node !== null && !Array.isArray(node)) {
             for (const [key, propSchema] of Object.entries(schema.properties)) {
                 if (key in node) {
-                    checkNode(node[key], propSchema, path ? `${path}.${key}` : key);
+                    checkNode((node as Record<string, unknown>)[key], propSchema, path ? `${path}.${key}` : key);
                 }
             }
         }
@@ -164,11 +172,11 @@ export function validateJsonSchema(data: any, schemaObj: any): ValidationReport 
 
     try {
         checkNode(data, schemaObj, '');
-    } catch (e: any) {
+    } catch (e: unknown) {
         errors.push({
             line: 1,
             column: 1,
-            message: `Schema execution error: ${e.message}`,
+            message: `Schema execution error: ${(e instanceof Error ? e.message : String(e))}`,
             severity: 'error'
         });
     }

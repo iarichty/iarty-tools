@@ -27,7 +27,7 @@ export default function HelmetContainer({ children, title, description, path, fa
     const canonical = path ? `${metadataBase}${path}` : metadataBase;
 
     // Structured data (SEO + AEO + GEO / Knowledge Graph)
-    const graphItems: any[] = [
+    const graphItems: Record<string, unknown>[] = [
         {
             '@type': 'WebSite',
             '@id': `${metadataBase}/#website`,

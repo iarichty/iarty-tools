@@ -52,8 +52,8 @@ export const SecuritySuiteTool: React.FC = () => {
         try {
             const encrypted = await encryptAesGcm(aesInput, aesPassword);
             setAesOutput(encrypted);
-        } catch (e: any) {
-            setAesOutput(`Encryption error: ${e.message}`);
+        } catch (e: unknown) {
+            setAesOutput(`Encryption error: ${(e instanceof Error ? e.message : String(e))}`);
         }
     };
 
@@ -61,8 +61,8 @@ export const SecuritySuiteTool: React.FC = () => {
         try {
             const decrypted = await decryptAesGcm(aesOutput, aesPassword);
             setAesOutput(decrypted);
-        } catch (e: any) {
-            setAesOutput(`Decryption error: ${e.message}`);
+        } catch (e: unknown) {
+            setAesOutput(`Decryption error: ${(e instanceof Error ? e.message : String(e))}`);
         }
     };
 
@@ -223,7 +223,7 @@ export const SecuritySuiteTool: React.FC = () => {
                     <div className="flex items-center gap-3 mb-4">
                         <select
                             value={tokenFormat}
-                            onChange={(e) => setTokenFormat(e.target.value as any)}
+                            onChange={(e) => setTokenFormat(e.target.value as never)}
                             className="p-2 bg-gray-50 dark:bg-black/30 border border-black/5 dark:border-white/10 rounded-xl text-xs font-bold"
                         >
                             <option value="hex">HEX</option>

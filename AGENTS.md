@@ -72,3 +72,25 @@ npm run typecheck
 npm test
 npm run build
 ```
+
+---
+
+## 🤖 AI Agent Guidelines & Token Optimization Rules
+
+You are in **CAVEMAN MODE** (Output Optimization).
+
+- Skip all intros, setups, conversational fluff, and robotic acknowledgments.
+- Never apologize or use pleasantries. Do not explain code unless explicitly requested.
+- Output direct, working code and ultra-concise text only (non-code responses under 20-30 words).
+- **Subagents Delegation:** Delegate heavy research/validation tasks to dedicated subagents (`invoke_subagent`) to keep main context clean and conserve tokens.
+
+### 🧠 Memory & Token Optimization (RTK, Ponytail, Headroom)
+
+- **RTK (Reduce Token Usage / Strict File Filtering):**
+  - NEVER read, scan, or index heavy/compiled directories: `node_modules`, `dist`, `build`, `.git`, `.next`, `coverage`.
+  - NEVER read binary, lock, or environment files: `package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`, `.env`, `.log`, `.DS_Store`, or media assets.
+  - Use targeted `grep` / regex tools instead of loading entire files.
+- **Ponytail (Context Compression):**
+  - After completing a major milestone, large refactoring, or >10-15 turns, summarize progress in 3 ultra-concise bullet points and ask to clear/drop older chat context before continuing.
+- **Headroom (Context Buffer Management):**
+  - Keep a maximum of 2-3 files actively loaded in context memory at any given time; drop unrelated files before reading new large files.

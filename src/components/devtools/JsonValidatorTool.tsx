@@ -22,10 +22,10 @@ export const JsonValidatorTool: React.FC = () => {
             const parsedSchema = JSON.parse(schemaInput);
             const schemaReport = validateJsonSchema(syntaxReport.parsedData, parsedSchema);
             setReport(schemaReport);
-        } catch (e: any) {
+        } catch (e: unknown) {
             setReport({
                 isValid: false,
-                errors: [{ line: 1, column: 1, message: `Invalid Schema: ${e.message}`, severity: 'error' }],
+                errors: [{ line: 1, column: 1, message: `Invalid Schema: ${(e instanceof Error ? e.message : String(e))}`, severity: 'error' }],
                 warnings: [],
                 stats: { totalErrors: 1, totalWarnings: 0 }
             });
@@ -118,7 +118,7 @@ export const JsonValidatorTool: React.FC = () => {
                             {report.errors.map((err, i) => (
                                 <div key={i} className="p-3 bg-white dark:bg-gray-900 border border-red-100 dark:border-red-900/30 rounded-xl text-xs">
                                     <div className="font-semibold text-red-600 dark:text-red-400">
-                                        Line {err.line}, Column {err.column}: {err.message}
+                                        Line {err.line}, Column {err.column}: {(err instanceof Error ? err.message : String(err))}
                                     </div>
                                     {err.snippet && (
                                         <div className="mt-1 font-mono text-[11px] p-2 bg-gray-50 dark:bg-black/40 rounded border border-black/5 dark:border-white/5 text-gray-700 dark:text-gray-300">

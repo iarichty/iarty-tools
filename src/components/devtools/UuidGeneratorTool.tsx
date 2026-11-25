@@ -21,7 +21,7 @@ export const UuidGeneratorTool: React.FC = () => {
     const [results, setResults] = useState<string[]>([]);
     const [exportFormat, setExportFormat] = useState<'plain' | 'json' | 'sql' | 'js' | 'csv'>('plain');
     const [validationInput, setValidationInput] = useState<string>('');
-    const [validationResult, setValidationResult] = useState<any>(null);
+    const [validationResult, setValidationResult] = useState<{ valid: boolean; version?: number; variant?: string } | null>(null);
 
     const handleGenerate = async () => {
         const list: string[] = [];
